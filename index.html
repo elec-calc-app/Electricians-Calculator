@@ -39,25 +39,37 @@
 
   html, body {
     min-height: 100%;
+    overscroll-behavior: none;
+    overflow-x: hidden;
     background: var(--bg);
     background-image: radial-gradient(ellipse 100% 60% at 70% 0%, #27272a 0%, transparent 55%);
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
     font-family: 'Inter', system-ui, sans-serif;
-    padding: 28px 16px;
+    padding: 0;
+  }
+
+
+  /* Lock app feel — no rubber banding, no text selection, no long-press popups */
+  * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  input, textarea, select {
+    -webkit-user-select: text;
+    user-select: text;
   }
 
   .calc-wrap {
     width: 100%;
-    min-width: 420px;
-    max-width: 420px;
+    min-width: 0;
+    max-width: 100%;
     background: var(--card);
-    border-radius: 14px;
-    box-shadow:
-      0 0 0 1px rgba(0,0,0,.08),
-      0 4px 12px rgba(0,0,0,.1),
-      0 20px 60px rgba(0,0,0,.25);
+    border-radius: 0;
+    box-shadow: none;
     overflow: hidden;
   }
 
@@ -180,6 +192,11 @@
     transition: border-color .15s, box-shadow .15s, background .15s;
     -webkit-appearance: none;
     appearance: none;
+  }
+
+  /* Force 16px on focus only — stops iOS Safari zoom trigger */
+  @media screen and (max-width: 768px) {
+    input.fi:focus, select.fi:focus { font-size: 16px !important; }
   }
   input.fi:focus, select.fi:focus {
     border-color: var(--accent);
@@ -1483,6 +1500,8 @@ function updateEng(r,xl,K,sinT,pf,T,cur,ph){document.getElementById('ei-r').text
 function toggleEng(){var b=document.getElementById('eng-body'),t=document.getElementById('eng-toggle'),o=b.classList.contains('open');b.className=o?'eng-body':'eng-body open';t.className=o?'eng-toggle':'eng-toggle open';}
 
 function calculateVD(){
+  if(document.activeElement)document.activeElement.blur();
+  
   clrVD();
   var type=document.getElementById('f-type').value,cur=document.getElementById('f-current').value,ph=document.getElementById('f-phase').value,pf=parseFloat(document.getElementById('f-pf').value),cond=document.getElementById('f-conductor').value,inst=document.getElementById('f-install').value,obj=document.getElementById('f-objective').value,V=parseFloat(document.getElementById('f-voltage').value),I=parseFloat(document.getElementById('f-amps').value),ws=document.getElementById('f-wiresize').value,D=parseFloat(document.getElementById('f-distance').value),par=Math.max(1,parseInt(document.getElementById('f-parallels').value)||1),ctR=document.getElementById('f-ctype').value,thr=ctR==='5'?5:3,ctN=ctR==='5'?'Both (5%)':ctR==='3f'?'Feeder (3%)':'Branch Circuit (3%)';
   if(cur==='dc'){ph='single';pf=1;}
@@ -1578,6 +1597,8 @@ function clrAmp(){
 function showAmpErr(m){clrAmp();var e=document.getElementById('amp-err');e.innerHTML=m;e.className='err-msg show';}
 
 function calculateAmp(){
+  if(document.activeElement)document.activeElement.blur();
+  
   clrAmp();
   var obj=document.getElementById('a-objective').value;
   var cond=document.getElementById('a-conductor').value;
@@ -1914,6 +1935,8 @@ function clrCF(){
 function showCFErr(m){clrCF();var e=document.getElementById('cf-err');e.innerHTML=m;e.className='err-msg show';}
 
 function calculateCF(){
+  if(document.activeElement)document.activeElement.blur();
+  
   clrCF();
   var condType=document.getElementById('cf-conduit').value;
   var tradeSize=document.getElementById('cf-size').value;
@@ -2450,6 +2473,8 @@ function toFrac(val){
 function gcd16(a,b){return b===0?a:gcd16(b,a%b);}
 
 function calculateBend(){
+  if(document.activeElement)document.activeElement.blur();
+  
   clrBend();
   var type=document.getElementById('bend-type').value;
   var size=document.getElementById('bend-size').value;
@@ -2747,6 +2772,8 @@ function clrBF(){
 function showBFErr(m){clrBF();var e=document.getElementById('bf-err');e.innerHTML=m;e.className='err-msg show';}
 
 function calculateBF(){
+  if(document.activeElement)document.activeElement.blur();
+  
   clrBF();
 
   // ── Get box volume
@@ -2997,6 +3024,8 @@ function onMCChange(){
 }
 
 function calculateMC(){
+  if(document.activeElement)document.activeElement.blur();
+  
   clrMC();
   var phase  = document.getElementById('mc-phase').value;
   var voltage= document.getElementById('mc-voltage').value;
@@ -3230,6 +3259,7 @@ cfAddRow();
 // Init bend illustration
 updateBendIllus('stub');
 onTypeChange();onObjectiveChange();
+
 </script>
 </body>
 </html>
