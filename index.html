@@ -3,51 +3,11 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-<meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Elec Calc"/>
-<meta name="theme-color" content="#18181b"/>
 <title>Electricians Calculator</title>
-<style>
-  /* ── System font stacks matching Inter/Roboto Mono quality on iOS ── */
-  @font-face {
-    font-family: 'Inter';
-    src: local('-apple-system'), local('BlinkMacSystemFont'), local('SF Pro Text'), local('Helvetica Neue');
-    font-weight: 400 700;
-  }
-  @font-face {
-    font-family: 'Roboto Mono';
-    src: local('Menlo'), local('Courier New'), local('monospace');
-    font-weight: 400 500;
-  }
-</style>
-<script>
-// ── Inline Service Worker — registers from a blob so single-file works offline ──
-if ('serviceWorker' in navigator) {
-  const swCode = `
-    const CACHE = 'elec-calc-v1';
-    self.addEventListener('install', e => {
-      e.waitUntil(
-        caches.open(CACHE).then(cache => cache.addAll(['/']))
-          .catch(() => {}) // standalone file — cache what we can
-      );
-      self.skipWaiting();
-    });
-    self.addEventListener('activate', e => {
-      e.waitUntil(clients.claim());
-    });
-    self.addEventListener('fetch', e => {
-      e.respondWith(
-        caches.match(e.request).then(cached => cached || fetch(e.request).catch(() => cached))
-      );
-    });
-  `;
-  const blob = new Blob([swCode], { type: 'application/javascript' });
-  const swUrl = URL.createObjectURL(blob);
-  navigator.serviceWorker.register(swUrl).catch(() => {});
-}
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -79,62 +39,55 @@ if ('serviceWorker' in navigator) {
 
   html, body {
     min-height: 100%;
-    min-height: 100dvh;
     background: var(--bg);
     background-image: radial-gradient(ellipse 100% 60% at 70% 0%, #27272a 0%, transparent 55%);
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-    padding: 0;
-    -webkit-text-size-adjust: 100%;
+    align-items: flex-start;
+    justify-content: center;
+    font-family: 'Inter', system-ui, sans-serif;
+    padding: 28px 16px;
   }
 
   .calc-wrap {
     width: 100%;
-    min-width: 0;
-    max-width: 100%;
+    min-width: 420px;
+    max-width: 420px;
     background: var(--card);
-    border-radius: 0;
-    box-shadow: none;
+    border-radius: 14px;
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,.08),
+      0 4px 12px rgba(0,0,0,.1),
+      0 20px 60px rgba(0,0,0,.25);
     overflow: hidden;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
   }
 
   /* ── Header ── */
   .calc-header {
-    padding: 18px 20px 14px;
-    padding-top: calc(18px + env(safe-area-inset-top));
+    padding: 20px 22px 18px;
     background: linear-gradient(135deg, #18181b 0%, #2d2d2d 100%);
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 10;
   }
   .calc-title-wrap { display: flex; flex-direction: column; gap: 4px; }
   .calc-eyebrow {
-    font-family: 'SF Mono', Menlo, 'Courier New', monospace;
-    font-size: 10px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 9px;
     font-weight: 400;
     letter-spacing: 2.5px;
     text-transform: uppercase;
     color: var(--accent);
   }
   .calc-title {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-    font-size: 22px;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: -.4px;
     line-height: 1;
   }
   .calc-tag {
-    font-family: 'SF Mono', Menlo, 'Courier New', monospace;
+    font-family: 'Roboto Mono', monospace;
     font-size: 9px;
     font-weight: 500;
     letter-spacing: 1.5px;
@@ -151,31 +104,24 @@ if ('serviceWorker' in navigator) {
     background: #111111;
     overflow-x: auto;
     scrollbar-width: none;
-    position: sticky;
-    top: calc(56px + env(safe-area-inset-top));
-    z-index: 9;
     -webkit-overflow-scrolling: touch;
   }
   .tab-bar::-webkit-scrollbar { display: none; }
   .tab-btn {
-    flex: 1;
+    flex: 0 0 auto;
     min-width: 52px;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-    font-size: 11px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
     font-weight: 600;
     letter-spacing: .1px;
     color: rgba(255,255,255,.85);
     background: none;
     border: none;
     border-bottom: 2px solid transparent;
-    padding: 13px 6px 11px;
+    padding: 11px 8px 9px;
     cursor: pointer;
     transition: color .15s, border-color .15s, background .15s;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
   }
   .tab-btn.active {
     color: var(--accent);
@@ -185,17 +131,17 @@ if ('serviceWorker' in navigator) {
   .tab-btn:hover:not(.active) { color: #ffffff; }
 
   .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
+  .tab-panel.active { display: block; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 
   /* ── Section labels ── */
   .section-label {
-    font-family: 'SF Mono', Menlo, 'Courier New', monospace;
-    font-size: 10px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 9px;
     font-weight: 500;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--accent);
-    padding: 16px 20px 6px;
+    padding: 14px 20px 5px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -208,88 +154,75 @@ if ('serviceWorker' in navigator) {
   }
 
   /* ── Fields ── */
-  .fields { padding: 0 16px 14px; display: flex; flex-direction: column; gap: 10px; }
+  .fields { padding: 0 20px 12px; display: flex; flex-direction: column; gap: 7px; }
   .field-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .field-row.hidden { display: none; }
   .field-label {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
     font-weight: 500;
     color: var(--sub);
     flex-shrink: 0;
-    width: 130px;
+    width: 124px;
   }
 
   input.fi, select.fi {
     flex: 1;
-    font-family: 'SF Mono', Menlo, 'Courier New', monospace;
-    font-size: 14px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
     font-weight: 400;
     color: var(--text);
     background: var(--surface);
     border: 1.5px solid var(--border);
-    border-radius: 10px;
-    padding: 11px 12px;
+    border-radius: 8px;
+    padding: 7px 10px;
     outline: none;
     transition: border-color .15s, box-shadow .15s, background .15s;
     -webkit-appearance: none;
     appearance: none;
-    touch-action: manipulation;
   }
   input.fi:focus, select.fi:focus {
     border-color: var(--accent);
     background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(234,88,12,.1);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.1);
   }
   input.fi:disabled, select.fi:disabled { opacity: .4; cursor: not-allowed; }
   .sel-wrap { flex: 1; position: relative; }
   .sel-wrap::after {
     content: '▾';
     position: absolute;
-    right: 12px; top: 50%;
+    right: 9px; top: 50%;
     transform: translateY(-50%);
-    font-size: 12px;
+    font-size: 10px;
     color: var(--muted);
     pointer-events: none;
   }
-  .sel-wrap select { width: 100%; padding-right: 28px; cursor: pointer; }
-  .pf-hint { font-family: 'SF Mono', Menlo, 'Courier New', monospace; font-size: 11px; color: var(--muted); text-align: right; padding: 0 16px 2px; }
-  .divider { height: 1px; background: var(--border); margin: 6px 0; }
+  .sel-wrap select { width: 100%; padding-right: 22px; cursor: pointer; }
+  .pf-hint { font-family: 'Roboto Mono', monospace; font-size: 10px; color: var(--muted); text-align: right; padding: 0 20px 2px; }
+  .divider { height: 1px; background: var(--border); margin: 5px 0; }
 
   /* ── Buttons ── */
-  .btn-row {
-    padding: 14px 16px;
-    padding-bottom: calc(14px + env(safe-area-inset-bottom));
-    display: flex;
-    gap: 10px;
-    border-top: 1px solid var(--border);
-    background: var(--surface);
-    position: sticky;
-    bottom: 0;
-    z-index: 8;
-  }
+  .btn-row { padding: 12px 20px 16px; display: flex; gap: 8px; border-top: 1px solid var(--border); background: var(--surface); }
   .btn {
     flex: 1;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
     font-weight: 600;
-    padding: 14px;
-    border-radius: 10px;
+    padding: 10px;
+    border-radius: 8px;
     cursor: pointer;
     border: 1.5px solid;
     transition: all .12s;
     letter-spacing: .1px;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
   }
   .btn:active { transform: scale(.97); }
   .btn-calc {
     background: var(--accent);
     border-color: var(--accent-mid);
     color: #ffffff;
-    box-shadow: 0 2px 8px rgba(234,88,12,.3);
+    box-shadow: 0 1px 3px rgba(37,99,235,.3), 0 4px 12px rgba(37,99,235,.2);
   }
-  .btn-calc:hover { background: var(--accent-mid); }
+  .btn-calc:hover { background: var(--accent-mid); box-shadow: 0 2px 6px rgba(37,99,235,.4); }
   .btn-reset {
     background: linear-gradient(135deg, #18181b 0%, #2d2d2d 100%);
     border-color: #18181b;
@@ -298,15 +231,15 @@ if ('serviceWorker' in navigator) {
   .btn-reset:hover { background: linear-gradient(135deg, #2d2d2d 0%, #404040 100%); border-color: #404040; }
 
   /* ── Messages ── */
-  .warn-msg { display:none; margin:0 16px 12px; padding:12px 14px; background:var(--amber-bg); border:1.5px solid var(--amber-bdr); border-radius:10px; font-size:13px; color:var(--amber); font-weight:500; line-height:1.5; }
+  .warn-msg { display:none; margin:0 20px 10px; padding:9px 12px; background:var(--amber-bg); border:1.5px solid var(--amber-bdr); border-radius:8px; font-size:12px; color:var(--amber); font-weight:500; line-height:1.5; }
   .warn-msg.show { display:block; }
-  .err-msg { display:none; margin:0 16px 12px; padding:12px 14px; background:var(--red-bg); border:1.5px solid var(--red-bdr); border-radius:10px; font-size:13px; color:var(--red); font-weight:500; line-height:1.5; }
+  .err-msg { display:none; margin:0 20px 10px; padding:9px 12px; background:var(--red-bg); border:1.5px solid var(--red-bdr); border-radius:8px; font-size:12px; color:var(--red); font-weight:500; line-height:1.5; }
   .err-msg.show { display:block; }
 
   /* ── Result blocks ── */
-  .results { padding: 0 16px; display: flex; flex-direction: column; gap: 10px; }
+  .results { padding: 0 20px; display: flex; flex-direction: column; gap: 7px; }
   .result-block {
-    border-radius: 12px;
+    border-radius: 10px;
     border: 1.5px solid var(--border);
     background: var(--neutral-bg);
     overflow: hidden;
@@ -316,7 +249,7 @@ if ('serviceWorker' in navigator) {
     content: '';
     position: absolute;
     left: 0; top: 0; bottom: 0;
-    width: 5px;
+    width: 4px;
     background: var(--neutral-bdr);
   }
   .result-block.pass { border-color: var(--green-bdr); background: var(--green-bg); }
@@ -326,10 +259,10 @@ if ('serviceWorker' in navigator) {
   .result-block.neutral { border-color: var(--accent-bdr); background: var(--accent-lt); }
   .result-block.neutral::before { background: var(--accent); }
 
-  .result-head { display:flex; align-items:center; justify-content:space-between; padding:11px 14px 3px 18px; }
+  .result-head { display:flex; align-items:center; justify-content:space-between; padding:9px 12px 3px 16px; }
   .result-lbl {
-    font-family: 'SF Mono', Menlo, 'Courier New', monospace;
-    font-size: 10px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 9px;
     font-weight: 500;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -340,24 +273,24 @@ if ('serviceWorker' in navigator) {
   .result-block.neutral .result-lbl { color: var(--accent); }
 
   .result-badge {
-    font-family: 'SF Mono', Menlo, 'Courier New', monospace;
-    font-size: 9px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 8px;
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
-    padding: 4px 10px;
+    padding: 3px 8px;
     border-radius: 20px;
     border: 1.5px solid;
   }
   .result-block.pass .result-badge { color:var(--green); border-color:var(--green-bdr); background:rgba(5,150,105,.07); }
   .result-block.fail .result-badge { color:var(--red); border-color:var(--red-bdr); background:rgba(220,38,38,.07); }
-  .result-block.neutral .result-badge { color:var(--accent); border-color:var(--accent-bdr); background:rgba(234,88,12,.07); }
+  .result-block.neutral .result-badge { color:var(--accent); border-color:var(--accent-bdr); background:rgba(37,99,235,.07); }
 
   .result-val {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-    font-size: 34px;
+    font-family: 'Inter', sans-serif;
+    font-size: 30px;
     font-weight: 700;
-    padding: 2px 14px 4px 18px;
+    padding: 2px 12px 4px 16px;
     line-height: 1.1;
     color: var(--text);
     letter-spacing: -.5px;
@@ -367,70 +300,88 @@ if ('serviceWorker' in navigator) {
   .result-block.neutral .result-val { color: var(--accent); }
 
   .result-sub {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
     color: var(--muted);
-    padding: 0 14px 12px 18px;
-    line-height: 1.5;
+    padding: 0 12px 10px 16px;
+    line-height: 1.45;
   }
   .result-block.pass .result-sub { color: #047857; }
   .result-block.fail .result-sub { color: #b91c1c; }
   .result-block.neutral .result-sub { color: #c2410c; }
 
   /* ── Engineering panel ── */
-  .eng-panel { margin:12px 16px 0; background:var(--surface); border:1.5px solid var(--border); border-radius:12px; overflow:hidden; }
-  .eng-panel-head { display:flex; align-items:center; justify-content:space-between; padding:12px 14px; cursor:pointer; user-select:none; min-height:44px; }
-  .eng-panel-title { font-family:'SF Mono',Menlo,'Courier New',monospace; font-size:10px; font-weight:500; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); }
-  .eng-toggle { font-size:13px; color:var(--muted); transition:transform .2s; }
+  .eng-panel { margin:10px 20px 0; background:var(--surface); border:1.5px solid var(--border); border-radius:10px; overflow:hidden; }
+  .eng-panel-head { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; cursor:pointer; user-select:none; }
+  .eng-panel-title { font-family:'Roboto Mono',monospace; font-size:9px; font-weight:500; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); }
+  .eng-toggle { font-size:11px; color:var(--muted); transition:transform .2s; }
   .eng-toggle.open { transform:rotate(180deg); }
-  .eng-body { display:none; padding:0 14px 12px; border-top:1px solid var(--border); }
+  .eng-body { display:none; padding:0 12px 10px; border-top:1px solid var(--border); }
   .eng-body.open { display:block; }
-  .eng-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border); }
+  .eng-row { display:flex; justify-content:space-between; align-items:center; padding:5px 0; border-bottom:1px solid var(--border); }
   .eng-row:last-child { border-bottom:none; }
-  .eng-key { font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',sans-serif; font-size:13px; color:var(--sub); font-weight:500; }
-  .eng-val { font-family:'SF Mono',Menlo,'Courier New',monospace; font-size:13px; color:var(--accent); font-weight:500; }
+  .eng-key { font-family:'Inter',sans-serif; font-size:11px; color:var(--sub); font-weight:500; }
+  .eng-val { font-family:'Roboto Mono',monospace; font-size:11px; color:var(--accent); font-weight:500; }
 
   /* ── Disclaimer ── */
-  .disclaimer { margin:14px 16px 20px; padding:12px 14px; background:var(--surface); border:1.5px solid var(--border); border-radius:12px; }
-  .disclaimer-title { font-family:'SF Mono',Menlo,'Courier New',monospace; font-size:9px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
-  .disclaimer-text { font-size:12px; color:var(--muted); line-height:1.6; font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',sans-serif; }
-  .nec-note { padding:8px 16px 20px; font-family:'SF Mono',Menlo,'Courier New',monospace; font-size:10px; color:var(--muted); line-height:1.4; text-align:center; }
+  .disclaimer { margin:12px 20px 16px; padding:10px 13px; background:var(--surface); border:1.5px solid var(--border); border-radius:10px; }
+  .disclaimer-title { font-family:'Roboto Mono',monospace; font-size:8px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:5px; }
+  .disclaimer-text { font-size:10px; color:var(--muted); line-height:1.6; font-family:'Inter',sans-serif; }
+  .nec-note { padding:6px 20px 16px; font-family:'Roboto Mono',monospace; font-size:9px; color:var(--muted); line-height:1.4; text-align:center; }
 
   /* ── Fraction Calculator ── */
-  .fr-display { padding:16px 20px 18px; background:linear-gradient(135deg,#18181b 0%,#2d2d2d 100%); }
-  .fr-expr { font-family:'SF Mono',Menlo,'Courier New',monospace; font-size:13px; color:rgba(255,255,255,.4); text-align:right; min-height:18px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .fr-main { font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',sans-serif; font-size:48px; font-weight:700; color:#ffffff; text-align:right; line-height:1.05; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; letter-spacing:-.5px; }
-  .fr-main.error { color:#fca5a5; font-size:24px; }
-  .fr-keys { padding:12px; display:grid; grid-template-columns:repeat(4,1fr); gap:8px; background:var(--surface); }
-  .fk { font-family:'SF Mono',Menlo,'Courier New',monospace; font-size:17px; font-weight:500; border-radius:10px; cursor:pointer; padding:14px 4px; border:1.5px solid var(--border); background:var(--card); color:var(--text); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; line-height:1.2; transition:all .1s; -webkit-tap-highlight-color:transparent; box-shadow:0 1px 2px rgba(0,0,0,.05); touch-action:manipulation; min-height:56px; }
+  .fr-display { padding:12px 20px 14px; background:linear-gradient(135deg,#18181b 0%,#2d2d2d 100%); }
+  .fr-expr { font-family:'Roboto Mono',monospace; font-size:11px; color:rgba(255,255,255,.4); text-align:right; min-height:16px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .fr-main { font-family:'Inter',sans-serif; font-size:38px; font-weight:700; color:#ffffff; text-align:right; line-height:1.05; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; letter-spacing:-.5px; }
+  .fr-main.error { color:#fca5a5; font-size:20px; }
+  .fr-keys { padding:10px; display:grid; grid-template-columns:repeat(4,1fr); gap:6px; background:var(--surface); }
+  .fk { font-family:'Roboto Mono',monospace; font-size:15px; font-weight:500; border-radius:8px; cursor:pointer; padding:9px 4px; border:1.5px solid var(--border); background:var(--card); color:var(--text); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; line-height:1.2; transition:all .1s; -webkit-tap-highlight-color:transparent; box-shadow:0 1px 2px rgba(0,0,0,.05); }
+  .fk:hover { border-color:var(--accent); background:var(--accent-lt); }
   .fk:active { transform:scale(.93); filter:brightness(.94); }
   .fk.frac { background:var(--accent-lt); border-color:var(--accent-bdr); color:var(--accent); }
-  .fk.frac .fn { font-size:22px; font-weight:600; line-height:1; }
-  .fk.frac .fd { font-size:15px; font-weight:500; color:var(--accent-mid); border-top:1px solid var(--accent-bdr); padding-top:3px; width:75%; text-align:center; line-height:1; }
-  .fk.frac.whole { background:var(--card); border-color:var(--border); color:var(--sub); font-size:17px; }
-  .fk.op { background:var(--surface2); border-color:var(--border2); color:var(--text); font-size:22px; font-weight:400; }
-  .fk.eq { background:var(--accent); border-color:var(--accent-mid); color:#fff; font-size:20px; font-weight:700; box-shadow:0 1px 4px rgba(234,88,12,.3),0 2px 8px rgba(234,88,12,.2); }
-  .fk.clr { background:var(--red-bg); border-color:var(--red-bdr); color:var(--red); font-size:14px; font-weight:600; letter-spacing:.3px; }
+  .fk.frac .fn { font-size:19px; font-weight:600; line-height:1; }
+  .fk.frac .fd { font-size:13px; font-weight:500; color:var(--accent-mid); border-top:1px solid var(--accent-bdr); padding-top:2px; width:75%; text-align:center; line-height:1; }
+  .fk.frac.whole { background:var(--card); border-color:var(--border); color:var(--sub); font-size:15px; }
+  .fk.op { background:var(--surface2); border-color:var(--border2); color:var(--text); font-size:20px; font-weight:400; }
+  .fk.eq { background:var(--accent); border-color:var(--accent-mid); color:#fff; font-size:18px; font-weight:700; box-shadow:0 1px 4px rgba(234,88,12,.3),0 2px 8px rgba(234,88,12,.2); }
+  .fk.clr { background:var(--red-bg); border-color:var(--red-bdr); color:var(--red); font-size:12px; font-weight:600; letter-spacing:.3px; }
   .fk.span2 { grid-column:span 2; }
 
   /* ── DIP Switch ── */
-  .dip-display { padding:16px 20px 14px; background:linear-gradient(135deg,#18181b 0%,#2d2d2d 100%); display:flex; align-items:baseline; justify-content:space-between; }
-  .dip-disp-label { font-family:'SF Mono',Menlo,'Courier New',monospace; font-size:10px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:var(--accent); }
-  .dip-disp-val { font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',sans-serif; font-size:48px; font-weight:700; color:#ffffff; line-height:1; letter-spacing:-.5px; }
-  .dip-area { padding:20px 8px; display:flex; justify-content:center; background:var(--surface); }
-  .dip-body { background:#2a2a2a; border-radius:10px; padding:14px 10px; display:flex; flex-direction:row; gap:6px; justify-content:center; box-shadow:0 2px 12px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.06); border:1px solid #404040; }
-  .dip-sw { display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; -webkit-tap-highlight-color:transparent; user-select:none; touch-action:manipulation; }
-  .dip-bit-val { font-family:'SF Mono',Menlo,'Courier New',monospace; font-size:11px; font-weight:500; color:#ffffff; line-height:1; min-height:14px; text-align:center; transition:color .15s; }
+  .dip-display { padding:12px 20px 13px; background:linear-gradient(135deg,#18181b 0%,#2d2d2d 100%); display:flex; align-items:baseline; justify-content:space-between; }
+  .dip-disp-label { font-family:'Roboto Mono',monospace; font-size:9px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:var(--accent); }
+  .dip-disp-val { font-family:'Inter',sans-serif; font-size:38px; font-weight:700; color:#ffffff; line-height:1; letter-spacing:-.5px; }
+  .dip-area { padding:18px 8px 18px; display:flex; justify-content:center; background:var(--surface); }
+  .dip-body { background:#2a2a2a; border-radius:8px; padding:10px 8px; display:flex; flex-direction:row; gap:4px; justify-content:center; box-shadow:0 2px 12px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.06); border:1px solid #404040; }
+  .dip-sw { display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; -webkit-tap-highlight-color:transparent; user-select:none; }
+  .dip-bit-val { font-family:'Roboto Mono',monospace; font-size:10px; font-weight:500; color:#ffffff; line-height:1; min-height:11px; text-align:center; transition:color .15s; }
   .dip-sw.on .dip-bit-val { color:#fb923c; }
-  .dip-slot { width:30px; height:44px; background:#1c1c1c; border-radius:6px; border:1px solid #404040; position:relative; display:flex; align-items:center; padding:3px; box-shadow:inset 0 2px 4px rgba(0,0,0,.4); transition:border-color .15s; }
-  .dip-sw.on .dip-slot { border-color:#ea580c; box-shadow:inset 0 2px 4px rgba(0,0,0,.4),0 0 10px rgba(234,88,12,.25); }
-  .dip-rocker { width:24px; height:16px; border-radius:4px; background:linear-gradient(180deg,#606060 0%,#444444 100%); position:absolute; left:3px; top:3px; transition:top .18s cubic-bezier(.4,0,.2,1),background .15s; box-shadow:0 1px 3px rgba(0,0,0,.4); }
-  .dip-sw.on .dip-rocker { top:25px; background:linear-gradient(180deg,#fb923c 0%,#ea580c 100%); box-shadow:0 1px 3px rgba(0,0,0,.3),0 0 8px rgba(234,88,12,.35); }
-  .dip-state-lbl { font-family:'SF Mono',Menlo,'Courier New',monospace; font-size:9px; font-weight:500; letter-spacing:.5px; color:#ffffff; line-height:1; min-height:12px; transition:color .15s; }
+  .dip-slot { width:24px; height:34px; background:#1c1c1c; border-radius:5px; border:1px solid #404040; position:relative; display:flex; align-items:center; padding:2px; box-shadow:inset 0 2px 4px rgba(0,0,0,.4); transition:border-color .15s; }
+  .dip-sw.on .dip-slot { border-color:#ea580c; box-shadow:inset 0 2px 4px rgba(0,0,0,.4),0 0 8px rgba(234,88,12,.2); }
+  .dip-rocker { width:20px; height:13px; border-radius:3px; background:linear-gradient(180deg,#606060 0%,#444444 100%); position:absolute; left:2px; top:2px; transition:top .18s cubic-bezier(.4,0,.2,1),background .15s; box-shadow:0 1px 3px rgba(0,0,0,.4); }
+  .dip-sw.on .dip-rocker { top:19px; background:linear-gradient(180deg,#fb923c 0%,#ea580c 100%); box-shadow:0 1px 3px rgba(0,0,0,.3),0 0 8px rgba(234,88,12,.35); }
+  .dip-state-lbl { font-family:'Roboto Mono',monospace; font-size:7px; font-weight:500; letter-spacing:.5px; color:#ffffff; line-height:1; min-height:10px; transition:color .15s; }
   .dip-sw.on .dip-state-lbl { color:#fb923c; }
-  .dip-num-lbl { font-family:'SF Mono',Menlo,'Courier New',monospace; font-size:11px; font-weight:500; color:#ffffff; line-height:1; }
-  .dip-reset-wrap { padding:14px 16px; padding-bottom:calc(14px + env(safe-area-inset-bottom)); background:var(--surface); border-top:1px solid var(--border); }
+  .dip-num-lbl { font-family:'Roboto Mono',monospace; font-size:10px; font-weight:500; color:#ffffff; line-height:1; }
+  .dip-reset-wrap { padding:12px 20px 16px; background:var(--surface); border-top:1px solid var(--border); }
 </style>
+<style>
+  @keyframes spin{to{transform:rotate(360deg)}}
+</style>
+<script>
+if('serviceWorker' in navigator){
+  const CACHE='elec-calc-v1';
+  navigator.serviceWorker.register('data:application/javascript;charset=utf-8,'+encodeURIComponent(`
+    const CACHE='elec-calc-v1';
+    self.addEventListener('install',e=>e.waitUntil(
+      caches.open(CACHE).then(c=>c.addAll(['/'])).catch(()=>{})
+    ));
+    self.addEventListener('fetch',e=>e.respondWith(
+      caches.match(e.request).then(r=>r||fetch(e.request))
+    ));
+  `)).catch(()=>{});
+}
+</script>
 </head>
 <body>
 <div class="calc-wrap">
@@ -1212,10 +1163,10 @@ if ('serviceWorker' in navigator) {
       </div>
     </div>
     <div class="divider"></div>
-    <div class="section-label">Conductors <span style="font-size:11px;font-weight:400;color:var(--sub);">(314.16(B)(1))</span></div>
+    <div class="section-label">Conductors <span style="font-size:9px;font-weight:400;color:var(--sub);">(314.16(B)(1))</span></div>
     <div class="fields" id="bf-cond-rows"></div>
     <div style="padding:0 14px 6px;">
-      <button class="btn btn-reset" style="width:100%;font-size:14px;" onclick="bfAddCondRow()">+ Add Conductor Group</button>
+      <button class="btn btn-reset" style="width:100%;font-size:11px;" onclick="bfAddCondRow()">+ Add Conductor Group</button>
     </div>
     <div class="divider"></div>
     <div class="section-label">Deductions &amp; Fittings</div>
@@ -1362,7 +1313,7 @@ if ('serviceWorker' in navigator) {
       </div>
     </div>
     <div class="divider"></div>
-    <div class="section-label">Branch-Circuit OCPD <span style="font-size:11px;font-weight:400;color:var(--sub);">(430.52)</span></div>
+    <div class="section-label">Branch-Circuit OCPD <span style="font-size:9px;font-weight:400;color:var(--sub);">(430.52)</span></div>
     <div class="fields">
       <div class="field-row">
         <div class="field-label">Device Type</div>
@@ -1375,7 +1326,7 @@ if ('serviceWorker' in navigator) {
       </div>
     </div>
     <div class="divider"></div>
-    <div class="section-label">Conductor <span style="font-size:11px;font-weight:400;color:var(--sub);">(430.22 — 125% FLC)</span></div>
+    <div class="section-label">Conductor <span style="font-size:9px;font-weight:400;color:var(--sub);">(430.22 — 125% FLC)</span></div>
     <div class="fields">
       <div class="field-row">
         <div class="field-label">Conductor</div>
@@ -1476,7 +1427,7 @@ if ('serviceWorker' in navigator) {
       <div class="dip-body" id="dip-body"></div>
     </div>
     <div class="dip-reset-wrap">
-      <button class="btn btn-reset" style="width:100%;font-size:14px;letter-spacing:.5px;" onclick="dipReset()">RESET ALL</button>
+      <button class="btn btn-reset" style="width:100%;font-size:11px;letter-spacing:.5px;" onclick="dipReset()">RESET ALL</button>
     </div>
   </div>
 
@@ -1939,7 +1890,7 @@ function cfAddRow(){
   row.className='field-row';row.id='cf-row-'+id;
   row.style.cssText='gap:4px;align-items:center;';
   row.innerHTML=
-    '<div class="sel-wrap" style="flex:2;"><select class="fi" id="cf-type-'+id+'" style="font-size:13px;">'+typeOpts+'</select></div>'+
+    '<div class="sel-wrap" style="flex:2;"><select class="fi" id="cf-type-'+id+'" style="font-size:10px;">'+typeOpts+'</select></div>'+
     '<div class="sel-wrap" style="flex:1;"><select class="fi" id="cf-awg-'+id+'">'+sizeOpts+'</select></div>'+
     '<input class="fi" id="cf-qty-'+id+'" type="number" value="1" min="1" max="99" style="width:44px;flex:none;text-align:center;"/>'+
     '<button onclick="cfRemoveRow('+id+')" style="background:none;border:none;color:var(--red);font-size:16px;cursor:pointer;padding:0 2px;flex:none;">×</button>';
@@ -3276,535 +3227,7 @@ switchTab=function(tab,btn){
 bfAddCondRow();
 // Init conduit fill with one wire row
 cfAddRow();
-updateBendIllus('stub');
-onTypeChange();onObjectiveChange();
-</script>
-</body>
-</html>// ── Box Fill ──────────────────────────────────────────────────────────────────
-// Table 314.16(B) — Volume allowance per conductor in³
-var BF_VOL={'18':1.50,'16':1.75,'14':2.00,'12':2.25,'10':2.50,'8':3.00,'6':5.00};
-var BF_AWG_ORDER=['18','16','14','12','10','8','6'];
-
-var bfCondRowCount=0;
-
-function bfAddCondRow(){
-  bfCondRowCount++;
-  var id=bfCondRowCount;
-  var awgOpts=BF_AWG_ORDER.map(function(a){return'<option value="'+a+'"'+(a==='14'?' selected':'')+'>'+a+' AWG ('+BF_VOL[a]+' in³ each)</option>';}).join('');
-  var row=document.createElement('div');
-  row.className='field-row';row.id='bf-crow-'+id;
-  row.style.cssText='gap:4px;align-items:center;flex-wrap:nowrap;';
-  row.innerHTML=
-    '<div class="sel-wrap" style="flex:1;"><select class="fi" id="bf-cawg-'+id+'">'+awgOpts+'</select></div>'+
-    '<input class="fi" id="bf-cqty-'+id+'" type="number" value="2" min="1" max="99" style="width:44px;flex:none;text-align:center;" title="Count"/>'+
-    '<button onclick="bfRemoveCondRow('+id+')" style="background:none;border:none;color:var(--red);font-size:16px;cursor:pointer;padding:0 2px;flex:none;">×</button>';
-  document.getElementById('bf-cond-rows').appendChild(row);
-  clrBF();
-}
-
-function bfRemoveCondRow(id){
-  var r=document.getElementById('bf-crow-'+id);
-  if(r)r.parentNode.removeChild(r);
-  clrBF();
-}
-
-function onBFBoxChange(){
-  var t=document.getElementById('bf-boxtype').value;
-  document.getElementById('bf-row-box').className=t==='custom'?'field-row hidden':'field-row';
-  document.getElementById('bf-row-custom').className=t==='custom'?'field-row':'field-row hidden';
-  clrBF();
-}
-
-function clrBF(){
-  document.getElementById('bf-err').className='err-msg';
-  document.getElementById('bf-results').innerHTML='';
-  document.getElementById('bf-results-label').style.display='none';
-  document.getElementById('bf-disclaimer').style.display='none';
-  document.getElementById('bf-note').textContent='';
-}
-function showBFErr(m){clrBF();var e=document.getElementById('bf-err');e.innerHTML=m;e.className='err-msg show';}
-
-function calculateBF(){
-  clrBF();
-
-  // ── Get box volume
-  var boxType=document.getElementById('bf-boxtype').value;
-  var boxVol;
-  if(boxType==='custom'){
-    boxVol=parseFloat(document.getElementById('bf-custom-vol').value);
-    if(isNaN(boxVol)||boxVol<=0){showBFErr('Enter a valid box volume in in³.');return;}
-  } else {
-    var sel=document.getElementById('bf-box').value;
-    boxVol=parseFloat(sel);
-    if(isNaN(boxVol)){showBFErr('Select a valid box size.');return;}
-  }
-
-  // ── Conductor rows — find largest AWG for clamp/stud/EGC reference
-  var condRows=document.getElementById('bf-cond-rows').children;
-  if(condRows.length===0){showBFErr('Add at least one conductor group.');return;}
-
-  var conductorVol=0;
-  var largestAWGIdx=0; // index into BF_AWG_ORDER (higher = larger wire = more volume)
-  var condBreakdown=[];
-
-  for(var i=0;i<condRows.length;i++){
-    var rowId=condRows[i].id.replace('bf-crow-','');
-    var awg=document.getElementById('bf-cawg-'+rowId).value;
-    var qty=parseInt(document.getElementById('bf-cqty-'+rowId).value)||1;
-    var vol=BF_VOL[awg];
-    if(!vol){showBFErr('No volume data for '+awg+' AWG.');return;}
-    var rowVol=vol*qty;
-    conductorVol+=rowVol;
-    var awgIdx=BF_AWG_ORDER.indexOf(awg);
-    if(awgIdx>largestAWGIdx) largestAWGIdx=awgIdx;
-    condBreakdown.push(qty+'× '+awg+' AWG ('+qty+'×'+vol+'='+rowVol.toFixed(2)+' in³)');
-  }
-  var largestAWG=BF_AWG_ORDER[largestAWGIdx];
-  var largestVol=BF_VOL[largestAWG];
-
-  // ── Clamp fill — 314.16(B)(2): 1 allowance total = 1× largest conductor vol
-  var clamps=parseInt(document.getElementById('bf-clamps').value)||0;
-  var clampVol=clamps>0?largestVol:0;
-
-  // ── Support fittings — 314.16(B)(3): 1 allowance each = largest conductor vol
-  var studs=parseInt(document.getElementById('bf-studs').value)||0;
-  var studVol=studs*largestVol;
-
-  // ── Device fill — 314.16(B)(4): 2 allowances per yoke × device conductor size
-  var devices=parseInt(document.getElementById('bf-devices').value)||0;
-  var devAWG=document.getElementById('bf-device-awg').value;
-  var devVol=BF_VOL[devAWG]||0;
-  var deviceTotal=devices*2*devVol;
-
-  // ── EGC fill — 314.16(B)(5):
-  // Up to 4 EGCs = 1 allowance total based on largest EGC
-  // Each EGC beyond 4 = ¼ allowance each based on largest EGC
-  var egcCount=parseInt(document.getElementById('bf-egc').value)||0;
-  var egcAWG=document.getElementById('bf-egc-awg').value;
-  var egcUnitVol=egcCount>0?(BF_VOL[egcAWG]||0):0;
-  var egcVol=0;
-  var egcLabel='';
-  if(egcCount>0){
-    var extras=Math.max(0,egcCount-4);
-    egcVol=egcUnitVol+(extras*egcUnitVol*0.25);
-    if(extras>0){
-      egcLabel='1 allowance (first ≤4) + '+extras+'×¼ allowance (extras) × '+egcUnitVol+' in³ ('+egcAWG+' AWG) = '+egcVol.toFixed(2)+' in³';
-    } else {
-      egcLabel='1 allowance × '+egcUnitVol+' in³ ('+egcAWG+' AWG, '+egcCount+' EGC'+(egcCount>1?'s':'')+') = '+egcVol.toFixed(2)+' in³';
-    }
-  }
-
-  // ── Total used volume
-  var totalUsed=conductorVol+clampVol+studVol+deviceTotal+egcVol;
-  var remaining=boxVol-totalUsed;
-  var pass=totalUsed<=boxVol;
-  var fillPct=(totalUsed/boxVol)*100;
-
-  // ── Build breakdown sub-lines
-  var breakdown=[];
-  breakdown.push('Conductors: '+condBreakdown.join(', ')+' = '+conductorVol.toFixed(2)+' in³');
-  if(clampVol>0) breakdown.push('Clamps: 1 allowance × '+largestVol+' in³ ('+largestAWG+' AWG largest) = '+clampVol.toFixed(2)+' in³');
-  if(studVol>0) breakdown.push('Support fittings: '+studs+' × '+largestVol+' in³ = '+studVol.toFixed(2)+' in³');
-  if(deviceTotal>0) breakdown.push('Devices: '+devices+' yoke(s) × 2 × '+devVol+' in³ ('+devAWG+' AWG) = '+deviceTotal.toFixed(2)+' in³');
-  if(egcVol>0) breakdown.push('EGCs: '+egcLabel);
-
-  var blocks=[];
-
-  // Block 1 — Box volume
-  var boxLabel=boxType==='custom'?'Custom box':document.getElementById('bf-box').options[document.getElementById('bf-box').selectedIndex].text;
-  blocks.push(makeBlock('neutral','Box Volume','TABLE 314.16(A)',boxVol.toFixed(1)+' in³',boxLabel));
-
-  // Block 2 — Volume used with full breakdown
-  blocks.push(makeBlock('neutral','Volume Used','314.16(B)(1)–(5)',totalUsed.toFixed(2)+' in³',breakdown.join(' · ')));
-
-  // Block 3 — Pass/fail
-  var badge=pass?'✓ WITHIN VOLUME':'▲ EXCEEDS VOLUME';
-  blocks.push(makeBlock(pass?'pass':'fail','Box Fill',badge,fillPct.toFixed(1)+'%',
-    'Used: '+totalUsed.toFixed(2)+' in³ of '+boxVol.toFixed(1)+' in³ · '+(pass?'Remaining: '+remaining.toFixed(2)+' in³':'Over by: '+Math.abs(remaining).toFixed(2)+' in³')));
-
-  document.getElementById('bf-results-label').style.display='block';
-  document.getElementById('bf-results').innerHTML=blocks.join('');
-  document.getElementById('bf-disclaimer').style.display='block';
-  document.getElementById('bf-note').textContent='NEC 2026 · Article 314.16 · Tables 314.16(A) & 314.16(B) · Design guidance only · Verify with AHJ';
-}
-
-function resetBF(){
-  document.getElementById('bf-boxtype').value='table';
-  document.getElementById('bf-box').value='12.5';
-  document.getElementById('bf-custom-vol').value='';
-  document.getElementById('bf-clamps').value='0';
-  document.getElementById('bf-studs').value='0';
-  document.getElementById('bf-devices').value='0';
-  document.getElementById('bf-device-awg').value='14';
-  document.getElementById('bf-egc').value='0';
-  document.getElementById('bf-egc-awg').value='14';
-  document.getElementById('bf-cond-rows').innerHTML='';
-  bfCondRowCount=0;
-  onBFBoxChange();
-  clrBF();
-  bfAddCondRow();
-}
-
-// ── Motor Circuit ─────────────────────────────────────────────────────────────
-// Table 430.250 — 3-Phase AC Full-Load Currents (Amperes)
-// Keys: hp → voltage → amps  (voltages: 115,200,208,230,460,575)
-var MC_FLC_3PH={
-  '0.5': {'115':4.4, '200':2.5, '208':2.4, '230':2.1, '460':1.0, '575':0.8},
-  '0.75':{'115':6.4, '200':3.7, '208':3.5, '230':3.0, '460':1.5, '575':1.2},
-  '1':   {'115':8.4, '200':4.8, '208':4.6, '230':4.0, '460':2.0, '575':1.6},
-  '1.5': {'115':12.0,'200':6.9, '208':6.6, '230':5.7, '460':2.8, '575':2.2},
-  '2':   {'115':13.6,'200':7.8, '208':7.5, '230':6.5, '460':3.2, '575':2.6},
-  '3':   {           '200':11.0,'208':10.6,'230':9.2, '460':4.6, '575':3.7},
-  '5':   {           '200':17.5,'208':16.7,'230':15.2,'460':7.6, '575':6.1},
-  '7.5': {           '200':25.3,'208':24.2,'230':22.0,'460':11.0,'575':9.0},
-  '10':  {           '200':32.2,'208':30.8,'230':28.0,'460':14.0,'575':11.0},
-  '15':  {           '200':48.3,'208':46.2,'230':42.0,'460':21.0,'575':17.0},
-  '20':  {           '200':62.1,'208':59.4,'230':54.0,'460':27.0,'575':22.0},
-  '25':  {           '200':78.2,'208':74.8,'230':68.0,'460':34.0,'575':27.0},
-  '30':  {           '200':92.0,'208':88.0,'230':80.0,'460':40.0,'575':32.0},
-  '40':  {           '200':120, '208':114, '230':104, '460':52.0,'575':41.0},
-  '50':  {           '200':150, '208':143, '230':130, '460':65.0,'575':52.0},
-  '60':  {           '200':177, '208':169, '230':154, '460':77.0,'575':62.0},
-  '75':  {           '200':221, '208':211, '230':192, '460':96.0,'575':77.0},
-  '100': {           '200':285, '208':272, '230':248, '460':124, '575':99.0},
-  '125': {           '200':359, '208':343, '230':312, '460':156, '575':125},
-  '150': {           '200':414, '208':396, '230':360, '460':180, '575':144},
-  '200': {           '200':552, '208':528, '230':480, '460':240, '575':192}
-};
-
-// Table 430.248 — Single-Phase AC Full-Load Currents (Amperes)
-// Voltages: 115, 200, 208, 230
-var MC_FLC_1PH={
-  '0.17':{'115':4.4, '200':2.5, '208':2.4, '230':2.2},
-  '0.25':{'115':5.8, '200':3.3, '208':3.2, '230':2.9},
-  '0.33':{'115':7.2, '200':4.1, '208':4.0, '230':3.6},
-  '0.5': {'115':9.8, '200':5.6, '208':5.4, '230':4.9},
-  '0.75':{'115':13.8,'200':7.9, '208':7.6, '230':6.9},
-  '1':   {'115':16.0,'200':9.2, '208':8.8, '230':8.0},
-  '1.5': {'115':20.0,'200':11.5,'208':11.0,'230':10.0},
-  '2':   {'115':24.0,'200':13.8,'208':13.2,'230':12.0},
-  '3':   {'115':34.0,'200':19.6,'208':18.7,'230':17.0},
-  '5':   {'115':56.0,'200':32.2,'208':30.8,'230':28.0},
-  '7.5': {'115':80.0,'200':46.0,'208':44.0,'230':40.0},
-  '10':  {'115':100, '200':57.5,'208':55.0,'230':50.0}
-};
-
-// Table 430.52(C)(1) — Max OCPD as % of FLC
-// Keys: motor type → device type → percentage
-// device: itb=inverse time breaker, tdf=time-delay fuse, ntdf=non-time-delay fuse, inst=instantaneous trip
-var MC_OCPD_PCT={
-  'squirrel':{'ntdf':300,'tdf':175,'inst':800, 'itb':250},
-  'designB': {'ntdf':300,'tdf':175,'inst':1100,'itb':250},
-  'sync':    {'ntdf':300,'tdf':175,'inst':800, 'itb':250},
-  'wound':   {'ntdf':150,'tdf':150,'inst':800, 'itb':150},
-  '1ph':     {'ntdf':300,'tdf':175,'inst':800, 'itb':250}
-};
-
-// Max allowed % if standard size won't allow motor to start (430.52(C)(1))
-var MC_OCPD_MAX={
-  'squirrel':{'ntdf':400,'tdf':225,'inst':1300,'itb':400},
-  'designB': {'ntdf':400,'tdf':225,'inst':1700,'itb':400},
-  'sync':    {'ntdf':400,'tdf':225,'inst':1300,'itb':400},
-  'wound':   {'ntdf':200,'tdf':200,'inst':1300,'itb':400},
-  '1ph':     {'ntdf':400,'tdf':225,'inst':1300,'itb':400}
-};
-
-// Standard OCPD ratings from Table 240.6(A) (already used in ampacity tab)
-var STD_OCPD=[15,20,25,30,35,40,45,50,60,70,80,90,100,110,125,150,175,200,225,250,300,350,400,450,500,600,700,800,1000,1200,1600,2000,2500,3000];
-
-function getMCFlc(phase, hp, voltage){
-  var tbl = phase==='3ph' ? MC_FLC_3PH : MC_FLC_1PH;
-  var row = tbl[String(hp)];
-  if(!row) return null;
-  return row[String(voltage)] || null;
-}
-
-// Find smallest wire in AMP16 that meets required ampacity at given temp/terminal
-function mcMinWire(cond, required, insTemp, termTemp){
-  var termIdx = getTempIdx(parseInt(termTemp));
-  var insIdx  = getTempIdx(getTempC(insTemp));
-  var useIdx  = Math.min(termIdx, insIdx); // governed by lower of the two
-  var tbl = AMP16[cond];
-  for(var i=0; i<WIRE_ORDER.length; i++){
-    var s=WIRE_ORDER[i];
-    if(!tbl[s]) continue;
-    var amp=tbl[s][useIdx];
-    if(typeof amp==='number' && amp>=required) return {size:s, amp:amp, idx:useIdx};
-  }
-  return null;
-}
-
-// Find next standard OCPD at or below a value
-function stdOCPDatOrBelow(val){
-  var result=STD_OCPD[0];
-  for(var i=0;i<STD_OCPD.length;i++){if(STD_OCPD[i]<=val)result=STD_OCPD[i];else break;}
-  return result;
-}
-// Find next standard OCPD at or above a value
-function stdOCPDatOrAbove(val){
-  for(var i=0;i<STD_OCPD.length;i++){if(STD_OCPD[i]>=val)return STD_OCPD[i];}
-  return STD_OCPD[STD_OCPD.length-1];
-}
-
-function clrMC(){
-  document.getElementById('mc-err').className='err-msg';
-  document.getElementById('mc-results').innerHTML='';
-  document.getElementById('mc-results-label').style.display='none';
-  document.getElementById('mc-disclaimer').style.display='none';
-  document.getElementById('mc-note').textContent='';
-}
-function showMCErr(m){clrMC();var e=document.getElementById('mc-err');e.innerHTML=m;e.className='err-msg show';}
-
-function onMCChange(){
-  // Update HP options based on phase — 1ph only goes to 10 HP
-  var phase=document.getElementById('mc-phase').value;
-  var hpSel=document.getElementById('mc-hp');
-  var volt=document.getElementById('mc-voltage');
-  // Adjust voltage options for phase
-  var v3=['208','230','460','575','200'];
-  var v1=['115','200','208','230'];
-  var cur=volt.value;
-  Array.from(volt.options).forEach(function(o){
-    o.style.display=(phase==='3ph'?v3:v1).indexOf(o.value)!==-1?'':'none';
-  });
-  if((phase==='1ph'&&v3.indexOf(cur)!==-1&&v1.indexOf(cur)===-1)||
-     (phase==='3ph'&&v1.indexOf(cur)!==-1&&v3.indexOf(cur)===-1)){
-    volt.value=phase==='1ph'?'115':'460';
-  }
-  clrMC();
-}
-
-function calculateMC(){
-  clrMC();
-  var phase  = document.getElementById('mc-phase').value;
-  var voltage= document.getElementById('mc-voltage').value;
-  var hp     = document.getElementById('mc-hp').value;
-  var mtype  = document.getElementById('mc-type').value;
-  var sf     = document.getElementById('mc-sf').value;
-  var ocpdType=document.getElementById('mc-ocpd').value;
-  var cond   = document.getElementById('mc-cond').value;
-  var insTemp= document.getElementById('mc-ins').value;
-  var termTemp=document.getElementById('mc-term').value;
-
-  // ── Step 1: Get FLC from Table 430.250 or 430.248
-  var flc = getMCFlc(phase, hp, voltage);
-  if(flc===null){
-    showMCErr('No FLC data for '+hp+' HP at '+voltage+'V '+(phase==='3ph'?'3-phase':'single-phase')+'. Check Table '+(phase==='3ph'?'430.250':'430.248')+'.');
-    return;
-  }
-
-  var phLabel = phase==='3ph'?'3-Phase':'1-Phase';
-  var tblRef  = phase==='3ph'?'Table 430.250':'Table 430.248';
-
-  // ── Step 2: Conductor sizing — 430.22 = FLC × 125%
-  var condRequired = flc * 1.25;
-  var wire = mcMinWire(cond, condRequired, insTemp, termTemp);
-  var tempLabel = getTempC(insTemp)+'°C ins / '+termTemp+'°C terminal';
-  var wireResult, wireSub;
-  if(!wire){
-    wireResult='See Table 310.16';
-    wireSub='Required ampacity: '+condRequired.toFixed(1)+' A — exceeds table range for '+cond;
-  } else {
-    wireResult=sizeLabel(wire.size)+' '+cond;
-    wireSub='FLC '+flc+' A × 125% = '+condRequired.toFixed(1)+' A min · '+wire.amp+' A @ '+['60°C','75°C','90°C'][wire.idx]+' · '+tempLabel;
-  }
-
-  // ── Step 3: OCPD sizing — 430.52 using Table 430.52(C)(1)
-  var mtypeKey = (phase==='1ph')?'1ph':mtype;
-  var pct     = MC_OCPD_PCT[mtypeKey][ocpdType];
-  var pctMax  = MC_OCPD_MAX[mtypeKey][ocpdType];
-  var calcOCPD= flc * pct / 100;
-  // Per 430.52(C)(1) — round UP to next standard size, but cannot exceed pct
-  var ocpdStd = stdOCPDatOrAbove(calcOCPD);
-  // If next standard size exceeds max percentage, round DOWN
-  var ocpdMaxA= flc * pctMax / 100;
-  var ocpdFinal, ocpdNote;
-  if(ocpdStd <= ocpdMaxA){
-    ocpdFinal = ocpdStd;
-    ocpdNote  = flc+' A × '+pct+'% = '+calcOCPD.toFixed(1)+' A → next std: '+ocpdFinal+' A (≤'+pctMax+'% max = '+ocpdMaxA.toFixed(1)+' A ✓)';
-  } else {
-    // Must round down to stay within percentage
-    ocpdFinal = stdOCPDatOrBelow(calcOCPD);
-    ocpdNote  = flc+' A × '+pct+'% = '+calcOCPD.toFixed(1)+' A → std '+ocpdStd+' A exceeds '+pctMax+'% max ('+ocpdMaxA.toFixed(1)+' A) → use '+ocpdFinal+' A';
-  }
-  var ocpdDevLabel={'itb':'Inverse Time Breaker','tdf':'Dual Element Fuse','ntdf':'Non-Time Delay Fuse','inst':'Instantaneous Trip Breaker'}[ocpdType];
-
-  // ── Step 4: Overload protection — 430.32
-  var olPct   = sf==='1.15'?125:115;
-  var olMax   = flc * olPct / 100;
-  var olLabel = sf==='1.15'?'SF ≥ 1.15 or ≤40°C rise':'All other motors';
-
-  // ── Build result blocks
-  var blocks=[];
-
-  // Block 1 — FLC
-  blocks.push(makeBlock('neutral','Full-Load Current',tblRef,
-    flc+' A',
-    hp+' HP · '+voltage+'V · '+phLabel));
-
-  // Block 2 — Conductor
-  blocks.push(makeBlock('neutral','Min Conductor Size','430.22',
-    wireResult, wireSub));
-
-  // Block 3 — OCPD
-  blocks.push(makeBlock('neutral','Max Branch-Circuit OCPD','430.52 / TABLE 430.52',
-    ocpdFinal+' A',
-    ocpdDevLabel+' · '+ocpdNote));
-
-  // Block 4 — Overload
-  blocks.push(makeBlock('neutral','Max Overload Protection','430.32',
-    olMax.toFixed(1)+' A',
-    olLabel+' · '+flc+' A × '+olPct+'% = '+olMax.toFixed(1)+' A · set OL relay ≤ this value'));
-
-  document.getElementById('mc-results-label').style.display='block';
-  document.getElementById('mc-results').innerHTML=blocks.join('');
-  document.getElementById('mc-disclaimer').style.display='block';
-  document.getElementById('mc-note').textContent='NEC 2026 · Article 430 · Tables 430.250, 430.52(C)(1), 310.16 · Design guidance only · Verify with AHJ';
-}
-
-function resetMC(){
-  document.getElementById('mc-phase').value='3ph';
-  document.getElementById('mc-voltage').value='460';
-  document.getElementById('mc-hp').value='10';
-  document.getElementById('mc-type').value='squirrel';
-  document.getElementById('mc-sf').value='1.15';
-  document.getElementById('mc-ocpd').value='itb';
-  document.getElementById('mc-cond').value='copper';
-  document.getElementById('mc-ins').value='comm75';
-  document.getElementById('mc-term').value='75';
-  onMCChange();
-  clrMC();
-}
-
-// ── Fraction Calculator ───────────────────────────────────────────────────────
-var frState={display:'0',tokens:[],currentRaw:'',justEvaled:false};
-
-function frGcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;}
-function frParse(str){
-  str=str.trim();
-  var m=str.match(/^(\d+)\s+(\d+)\/(\d+)$/);
-  if(m){var w=parseInt(m[1]),n=parseInt(m[2]),d=parseInt(m[3]);return{n:w*d+n,d:d};}
-  m=str.match(/^(-?)(\d+)\/(\d+)$/);
-  if(m)return{n:parseInt(m[1]+m[2]),d:parseInt(m[3])};
-  var f=parseFloat(str);if(isNaN(f))return null;
-  var dm=65536,nm=Math.round(f*dm),g=frGcd(Math.abs(nm),dm);return{n:nm/g,d:dm/g};
-}
-function frSimplify(f){
-  if(!f||f.d===0)return null;
-  var g=frGcd(Math.abs(f.n),Math.abs(f.d)),n=f.n/g,d=f.d/g;
-  if(d<0){n=-n;d=-d;}return{n:n,d:d};
-}
-function frAdd(a,b){return frSimplify({n:a.n*b.d+b.n*a.d,d:a.d*b.d});}
-function frSub(a,b){return frSimplify({n:a.n*b.d-b.n*a.d,d:a.d*b.d});}
-function frMul(a,b){return frSimplify({n:a.n*b.n,d:a.d*b.d});}
-function frDiv(a,b){if(b.n===0)return null;return frSimplify({n:a.n*b.d,d:a.d*b.n});}
-function frStr(f){
-  if(!f)return'Error';
-  if(f.d===1)return''+f.n;
-  var sign=f.n<0?'-':'',an=Math.abs(f.n),ad=f.d;
-  var whole=Math.floor(an/ad),rem=an%ad;
-  if(rem===0)return sign+whole;
-  if(whole===0)return sign+rem+'/'+ad;
-  return sign+whole+' '+rem+'/'+ad;
-}
-function frEval(tokens){
-  var nums=[],ops=[],exp='num';
-  for(var i=0;i<tokens.length;i++){
-    var t=tokens[i];
-    if(exp==='num'){if(t.type!=='num')return null;var f=frParse(t.val);if(!f)return null;nums.push(f);exp='op';}
-    else{if(t.type!=='op')return null;ops.push(t.val);exp='num';}
-  }
-  if(nums.length===0||ops.length!==nums.length-1)return null;
-  var j=0;
-  while(j<ops.length){
-    if(ops[j]==='×'||ops[j]==='÷'){var r=ops[j]==='×'?frMul(nums[j],nums[j+1]):frDiv(nums[j],nums[j+1]);if(!r)return null;nums.splice(j,2,r);ops.splice(j,1);}else j++;
-  }
-  var res=nums[0];for(var k=0;k<ops.length;k++){res=ops[k]==='+'?frAdd(res,nums[k+1]):frSub(res,nums[k+1]);if(!res)return null;}
-  return res;
-}
-function frUpdateDisplay(){
-  var parts=frState.tokens.map(function(t){return t.raw;});
-  if(frState.currentRaw)parts.push(frState.currentRaw);
-  document.getElementById('fr-expr').textContent=parts.join(' ');
-  var el=document.getElementById('fr-main');el.className='fr-main';el.textContent=frState.display;
-}
-function frPushCurrent(){if(frState.currentRaw.trim()==='')return;frState.tokens.push({type:'num',val:frState.currentRaw.trim(),raw:frState.currentRaw.trim()});frState.currentRaw='';}
-function frInputFrac(frac){
-  if(frState.justEvaled){frState.tokens=[];frState.currentRaw='';frState.justEvaled=false;}
-  if(frState.currentRaw.indexOf('/')>=0||frac==='0'){frPushCurrent();frState.currentRaw=frac==='0'?'0':frac;}
-  else if(frState.currentRaw===''||frState.currentRaw==='0'){frState.currentRaw=frac==='0'?'0':frac;}
-  else{frState.currentRaw=frState.currentRaw+' '+frac;}
-  frState.display=frState.currentRaw;frUpdateDisplay();
-}
-function frInputNum(d){
-  if(frState.justEvaled){frState.tokens=[];frState.currentRaw='';frState.justEvaled=false;}
-  if(frState.currentRaw.indexOf('/')>=0){frPushCurrent();frState.currentRaw='';}
-  if(d==='.'){if(frState.currentRaw.indexOf('.')>=0)return;if(frState.currentRaw==='')frState.currentRaw='0';frState.currentRaw+='.';}
-  else{frState.currentRaw=(frState.currentRaw==='0'&&d!=='.')?d:frState.currentRaw+d;}
-  frState.display=frState.currentRaw||'0';frUpdateDisplay();
-}
-function frInputOp(op){
-  if(frState.justEvaled)frState.justEvaled=false;
-  if(frState.currentRaw.trim()!=='')frPushCurrent();
-  else if(frState.tokens.length===0)return;
-  var last=frState.tokens[frState.tokens.length-1];
-  if(last&&last.type==='op'){frState.tokens[frState.tokens.length-1]={type:'op',val:op,raw:op};}
-  else{frState.tokens.push({type:'op',val:op,raw:op});}
-  frState.display=op;frUpdateDisplay();
-}
-function frEquals(){
-  if(frState.currentRaw.trim()!=='')frPushCurrent();
-  if(frState.tokens.length===0)return;
-  while(frState.tokens.length>0&&frState.tokens[frState.tokens.length-1].type==='op')frState.tokens.pop();
-  var exprStr=frState.tokens.map(function(t){return t.raw;}).join(' ');
-  var result=frEval(frState.tokens);
-  var el=document.getElementById('fr-main');
-  if(!result){el.className='fr-main error';el.textContent='Error';document.getElementById('fr-expr').textContent=exprStr+' =';frState.tokens=[];frState.currentRaw='';frState.justEvaled=true;return;}
-  var rs=frStr(result);el.className='fr-main';el.textContent=rs;
-  document.getElementById('fr-expr').textContent=exprStr+' =';
-  frState.tokens=[{type:'num',val:rs,raw:rs}];frState.currentRaw='';frState.display=rs;frState.justEvaled=true;
-}
-function frClear(){
-  frState.display='0';frState.tokens=[];frState.currentRaw='';frState.justEvaled=false;
-  var el=document.getElementById('fr-main');el.className='fr-main';el.textContent='0';
-  document.getElementById('fr-expr').textContent='';
-}
-
-// ── DIP Switch Calculator ─────────────────────────────────────────────────────
-var DIP_SWITCHES=[{v:1,sw:1},{v:2,sw:2},{v:4,sw:3},{v:8,sw:4},{v:16,sw:5},{v:32,sw:6},{v:64,sw:7},{v:128,sw:8}];
-var dipState=[false,false,false,false,false,false,false,false];
-
-function dipRender(){
-  var body=document.getElementById('dip-body');
-  if(!body)return;
-  body.innerHTML='';
-  DIP_SWITCHES.forEach(function(sw,i){
-    var col=document.createElement('div');
-    col.className='dip-sw'+(dipState[i]?' on':'');
-    col.innerHTML='<div class="dip-bit-val">'+sw.v+'</div>'+
-      '<div class="dip-slot"><div class="dip-rocker"></div></div>'+
-      '<div class="dip-state-lbl">'+(dipState[i]?'ON':'OFF')+'</div>'+
-      '<div class="dip-num-lbl">'+sw.sw+'</div>';
-    col.addEventListener('click',function(){dipToggle(i);});
-    body.appendChild(col);
-  });
-  var total=0;dipState.forEach(function(on,i){if(on)total+=DIP_SWITCHES[i].v;});
-  document.getElementById('dip-result').textContent=total;
-}
-function dipToggle(i){dipState[i]=!dipState[i];dipRender();}
-function dipReset(){dipState=[false,false,false,false,false,false,false,false];dipRender();}
-
-// Init DIP on tab switch so it renders when first shown
-var _origSwitchTab=switchTab;
-switchTab=function(tab,btn){
-  _origSwitchTab(tab,btn);
-  if(tab==='dip')dipRender();
-};
-
-// Init box fill with one conductor row
-bfAddCondRow();
-// Init conduit fill with one wire row
-cfAddRow();
+// Init bend illustration
 updateBendIllus('stub');
 onTypeChange();onObjectiveChange();
 </script>
