@@ -9,23 +9,23 @@
 <link rel="apple-touch-icon" href="icon.png"/>
 <link rel="icon" type="image/png" href="icon.png"/>
 <title>Electricians Calculator</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&family=Orbitron:wght@700;900&display=swap" rel="stylesheet"/>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg:        #18181b;
-    --card:      #ffffff;
-    --surface:   #f5f5f5;
-    --surface2:  #ebebeb;
-    --border:    #e2e2e2;
-    --border2:   #c8c8c8;
-    --text:      #111111;
-    --sub:       #555555;
+    --bg:        #080a10;
+    --card:      #0e1117;
+    --surface:   #13181f;
+    --surface2:  #181e28;
+    --border:    #1c2230;
+    --border2:   #253040;
+    --text:      #dde6f0;
+    --sub:       #6a85a0;
     --muted:     #909090;
-    --accent:    #ea580c;
-    --accent-mid:#c2410c;
-    --accent-lt: #fff7ed;
-    --accent-bdr:#fed7aa;
+    --accent:    #16a34a;
+    --accent-mid:#15803d;
+    --accent-lt: #0a1f0f;
+    --accent-bdr:#0d3518;
     --green:     #16a34a;
     --green-bg:  #f0fdf4;
     --green-bdr: #bbf7d0;
@@ -79,23 +79,23 @@
   .calc-header {
     padding: 20px 22px 18px;
     padding-top: calc(20px + env(safe-area-inset-top));
-    background: linear-gradient(135deg, #18181b 0%, #2d2d2d 100%);
+    background: linear-gradient(135deg, #060809 0%, #0e1520 100%);
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
   }
-  .calc-title-wrap { display: flex; flex-direction: column; gap: 4px; }
+  .calc-bolt-bar { background: linear-gradient(135deg, #060809 0%, #0e1520 100%); padding: 4px 0 8px; overflow: visible; }
   .calc-eyebrow {
     font-family: 'Roboto Mono', monospace;
     font-size: 9px;
     font-weight: 400;
     letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: var(--accent);
+    color: #f0c020;
   }
   .calc-title {
-    font-family: 'Inter', sans-serif;
-    font-size: 20px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: -.4px;
@@ -116,37 +116,42 @@
   /* ── Tabs ── */
   .tab-bar {
     display: flex;
-    background: #111111;
+    background: #f0c020;
     overflow-x: auto;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
+    padding: 0;
+    gap: 0;
   }
   .tab-bar::-webkit-scrollbar { display: none; }
   .tab-btn {
     flex: 1;
     min-width: 0;
     font-family: 'Inter', sans-serif;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
-    letter-spacing: .1px;
-    color: rgba(255,255,255,.85);
+    letter-spacing: .2px;
+    color: #000000;
     background: none;
     border: none;
+    border-right: 1px solid rgba(0,0,0,.15);
     border-bottom: 2px solid transparent;
-    padding: 11px 8px 9px;
+    padding: 12px 6px 10px;
     cursor: pointer;
     transition: color .15s, border-color .15s, background .15s;
     white-space: nowrap;
+    text-align: center;
   }
+  .tab-btn:last-child { border-right: none; }
   .tab-btn.active {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
-    background: rgba(255,255,255,.06);
+    color: #ffffff;
+    border-bottom-color: #fff;
+    background: rgba(255,255,255,.25);
   }
-  .tab-btn:hover:not(.active) { color: #ffffff; }
+  .tab-btn:hover:not(.active) { color: #fff; }
 
   .tab-panel { display: none; }
-  .tab-panel.active { display: block; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .tab-panel.active { display: block; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #ffffff; }
 
   /* ── Section labels ── */
   .section-label {
@@ -165,7 +170,7 @@
     content: '';
     flex: 1;
     height: 1px;
-    background: var(--text);
+    background: #ccc;
   }
 
   /* ── Fields ── */
@@ -203,10 +208,12 @@
   }
   input.fi:focus, select.fi:focus {
     border-color: var(--accent);
-    background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+    background: #0e1a2e;
+    color: #dde6f0;
+    box-shadow: 0 0 0 3px rgba(22,163,74,.15);
   }
   input.fi:disabled, select.fi:disabled { opacity: .4; cursor: not-allowed; }
+  select.fi option { background: #0e1a2e; color: #dde6f0; }
   .sel-wrap { flex: 1; position: relative; }
   .sel-wrap::after {
     content: '▾';
@@ -237,14 +244,14 @@
   }
   .btn:active { transform: scale(.97); }
   .btn-calc {
-    background: var(--accent);
-    border-color: var(--accent-mid);
-    color: #ffffff;
+    background: #f0c020;
+    color: #000000;
+    border-color: #000000;
     box-shadow: 0 1px 3px rgba(37,99,235,.3), 0 4px 12px rgba(37,99,235,.2);
   }
-  .btn-calc:hover { background: var(--accent-mid); box-shadow: 0 2px 6px rgba(37,99,235,.4); }
+  .btn-calc:hover { background: #c9a010; box-shadow: 0 2px 6px rgba(37,99,235,.4); }
   .btn-reset {
-    background: linear-gradient(135deg, #18181b 0%, #2d2d2d 100%);
+    background: linear-gradient(135deg, #060809 0%, #0e1520 100%);
     border-color: #18181b;
     color: #ffffff;
   }
@@ -328,7 +335,7 @@
   }
   .result-block.pass .result-sub { color: #047857; }
   .result-block.fail .result-sub { color: #b91c1c; }
-  .result-block.neutral .result-sub { color: #c2410c; }
+  .result-block.neutral .result-sub { color: #047857; }
 
   /* ── Engineering panel ── */
   .eng-panel { margin:10px 20px 0; background:var(--surface); border:1.5px solid var(--border); border-radius:10px; overflow:hidden; }
@@ -341,7 +348,7 @@
   .eng-row { display:flex; justify-content:space-between; align-items:center; padding:5px 0; border-bottom:1px solid var(--border); }
   .eng-row:last-child { border-bottom:none; }
   .eng-key { font-family:'Inter',sans-serif; font-size:11px; color:var(--sub); font-weight:500; }
-  .eng-val { font-family:'Roboto Mono',monospace; font-size:11px; color:var(--accent); font-weight:500; }
+  .eng-val { font-family:'Roboto Mono',monospace; font-size:11px; color:#1a1a1a; font-weight:500; }
 
   /* ── Disclaimer ── */
   .disclaimer { margin:12px 20px 16px; padding:10px 13px; background:var(--surface); border:1.5px solid var(--border); border-radius:10px; }
@@ -350,40 +357,102 @@
   .nec-note { padding:6px 20px 16px; font-family:'Roboto Mono',monospace; font-size:9px; color:var(--muted); line-height:1.4; text-align:center; }
 
   /* ── Fraction Calculator ── */
-  .fr-display { padding:12px 20px 14px; background:linear-gradient(135deg,#18181b 0%,#2d2d2d 100%); }
-  .fr-expr { font-family:'Roboto Mono',monospace; font-size:11px; color:rgba(255,255,255,.4); text-align:right; min-height:16px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .fr-main { font-family:'Inter',sans-serif; font-size:38px; font-weight:700; color:#ffffff; text-align:right; line-height:1.05; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; letter-spacing:-.5px; }
+  .fr-display { padding:12px 20px 14px; background:#ffffff; }
+  .fr-expr { font-family:'Roboto Mono',monospace; font-size:11px; color:rgba(0,0,0,.4); text-align:right; min-height:16px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .fr-main { font-family:'Inter',sans-serif; font-size:38px; font-weight:700; color:#000000; text-align:right; line-height:1.05; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; letter-spacing:-.5px; }
   .fr-main.error { color:#fca5a5; font-size:20px; }
-  .fr-keys { padding:10px; display:grid; grid-template-columns:repeat(4,1fr); gap:6px; background:var(--surface); }
-  .fk { font-family:'Roboto Mono',monospace; font-size:15px; font-weight:500; border-radius:8px; cursor:pointer; padding:9px 4px; border:1.5px solid var(--border); background:var(--card); color:var(--text); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; line-height:1.2; transition:all .1s; -webkit-tap-highlight-color:transparent; box-shadow:0 1px 2px rgba(0,0,0,.05); }
-  .fk:hover { border-color:var(--accent); background:var(--accent-lt); }
+  .fr-keys { padding:10px; display:grid; grid-template-columns:repeat(4,1fr); gap:6px; background:#1a1a1a; }
+  .fk { font-family:'Roboto Mono',monospace; font-size:15px; font-weight:500; border-radius:8px; cursor:pointer; padding:9px 4px; border:1.5px solid #333; background:#2a2a2a; color:#ffffff; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; line-height:1.2; transition:all .1s; -webkit-tap-highlight-color:transparent; box-shadow:0 1px 2px rgba(0,0,0,.05); }
+  .fk:hover { border-color:#f0c020; background:#333; }
   .fk:active { transform:scale(.93); filter:brightness(.94); }
-  .fk.frac { background:var(--accent-lt); border-color:var(--accent-bdr); color:var(--accent); }
+  .fk.frac { background:#2a2520; border-color:#4a3a20; color:#f0c020; }
   .fk.frac .fn { font-size:19px; font-weight:600; line-height:1; }
-  .fk.frac .fd { font-size:13px; font-weight:500; color:var(--accent-mid); border-top:1px solid var(--accent-bdr); padding-top:2px; width:75%; text-align:center; line-height:1; }
-  .fk.frac.whole { background:var(--card); border-color:var(--border); color:var(--sub); font-size:15px; }
-  .fk.op { background:var(--surface2); border-color:var(--border2); color:var(--text); font-size:20px; font-weight:400; }
-  .fk.eq { background:var(--accent); border-color:var(--accent-mid); color:#fff; font-size:18px; font-weight:700; box-shadow:0 1px 4px rgba(234,88,12,.3),0 2px 8px rgba(234,88,12,.2); }
+  .fk.frac .fd { font-size:13px; font-weight:500; color:rgba(240,192,32,.6); border-top:1px solid #4a3a20; padding-top:2px; width:75%; text-align:center; line-height:1; }
+  .fk.frac.whole { background:#2a2a2a; border-color:#333; color:#ffffff; font-size:15px; }
+  .fk.op { background:#333; border-color:#444; color:#ffffff; font-size:20px; font-weight:400; }
+  .fk.eq { background:#f0c020; border-color:#c9a010; color:#000; font-size:18px; font-weight:700; box-shadow:0 1px 4px rgba(234,88,12,.3),0 2px 8px rgba(234,88,12,.2); }
   .fk.clr { background:var(--red-bg); border-color:var(--red-bdr); color:var(--red); font-size:12px; font-weight:600; letter-spacing:.3px; }
   .fk.span2 { grid-column:span 2; }
 
   /* ── DIP Switch ── */
   .dip-display { padding:12px 20px 13px; background:linear-gradient(135deg,#18181b 0%,#2d2d2d 100%); display:flex; align-items:baseline; justify-content:space-between; }
-  .dip-disp-label { font-family:'Roboto Mono',monospace; font-size:9px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:var(--accent); }
+  .dip-disp-label { font-family:'Roboto Mono',monospace; font-size:9px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:#ffffff; }
   .dip-disp-val { font-family:'Inter',sans-serif; font-size:38px; font-weight:700; color:#ffffff; line-height:1; letter-spacing:-.5px; }
-  .dip-area { padding:18px 8px 18px; display:flex; justify-content:center; background:var(--surface); }
+  .dip-area { padding:18px 8px 18px; display:flex; justify-content:center; background:#ffffff; }
   .dip-body { background:#2a2a2a; border-radius:8px; padding:10px 8px; display:flex; flex-direction:row; gap:4px; justify-content:center; box-shadow:0 2px 12px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.06); border:1px solid #404040; }
   .dip-sw { display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; -webkit-tap-highlight-color:transparent; user-select:none; }
-  .dip-bit-val { font-family:'Roboto Mono',monospace; font-size:10px; font-weight:500; color:#ffffff; line-height:1; min-height:11px; text-align:center; transition:color .15s; }
-  .dip-sw.on .dip-bit-val { color:#fb923c; }
+  .dip-bit-val { font-family:'Roboto Mono',monospace; font-size:10px; font-weight:500; color:#f0c020; line-height:1; min-height:11px; text-align:center; transition:color .15s; }
+  .dip-sw.on .dip-bit-val { color:#ffffff; }
   .dip-slot { width:24px; height:34px; background:#1c1c1c; border-radius:5px; border:1px solid #404040; position:relative; display:flex; align-items:center; padding:2px; box-shadow:inset 0 2px 4px rgba(0,0,0,.4); transition:border-color .15s; }
-  .dip-sw.on .dip-slot { border-color:#ea580c; box-shadow:inset 0 2px 4px rgba(0,0,0,.4),0 0 8px rgba(234,88,12,.2); }
+  .dip-slot { border-color:#ffffff; }
+  .dip-sw.on .dip-slot { border-color:#f0c020; box-shadow:inset 0 2px 4px rgba(0,0,0,.4),0 0 8px rgba(234,88,12,.2); }
   .dip-rocker { width:20px; height:13px; border-radius:3px; background:linear-gradient(180deg,#606060 0%,#444444 100%); position:absolute; left:2px; top:2px; transition:top .18s cubic-bezier(.4,0,.2,1),background .15s; box-shadow:0 1px 3px rgba(0,0,0,.4); }
-  .dip-sw.on .dip-rocker { top:19px; background:linear-gradient(180deg,#fb923c 0%,#ea580c 100%); box-shadow:0 1px 3px rgba(0,0,0,.3),0 0 8px rgba(234,88,12,.35); }
+  .dip-sw.on .dip-rocker { top:19px; background:linear-gradient(180deg,#f0c020 0%,#c9a010 100%); box-shadow:0 1px 3px rgba(0,0,0,.15),0 0 8px rgba(240,192,32,.4); }
   .dip-state-lbl { font-family:'Roboto Mono',monospace; font-size:7px; font-weight:500; letter-spacing:.5px; color:#ffffff; line-height:1; min-height:10px; transition:color .15s; }
-  .dip-sw.on .dip-state-lbl { color:#fb923c; }
-  .dip-num-lbl { font-family:'Roboto Mono',monospace; font-size:10px; font-weight:500; color:#ffffff; line-height:1; }
-  .dip-reset-wrap { padding:12px 20px 16px; background:var(--surface); border-top:1px solid var(--border); }
+  .dip-sw.on .dip-state-lbl { color:#ffffff; }
+  .dip-num-lbl { font-family:'Roboto Mono',monospace; font-size:10px; font-weight:500; color:#f0c020; line-height:1; }
+  .dip-reset-wrap { padding:12px 20px 16px; background:#ffffff; border-top:1px solid #ddd; }
+  /* ── White tab-panel overrides ── */
+  .tab-panel.active input.fi, .tab-panel.active select.fi {
+    color: #1a1a1a;
+    background: #f5f5f5;
+    border-color: #ccc;
+  }
+  .tab-panel.active input.fi:focus, .tab-panel.active select.fi:focus {
+    background: #fffdf0;
+    color: #1a1a1a;
+    border-color: #f0c020;
+    box-shadow: 0 0 0 3px rgba(240,192,32,.2);
+  }
+  .tab-panel.active select.fi option { background: #fff; color: #1a1a1a; }
+  .tab-panel.active .field-label { color: #444; }
+  .tab-panel.active .sel-wrap::after { color: #666; }
+  .tab-panel.active .pf-hint { color: #888; }
+  .tab-panel.active .btn-row { background: #f8f8f8; border-color: #ddd; }
+  .tab-panel.active .btn-reset { background: #333; border-color: #333; color: #ffffff; }
+  .tab-panel.active .btn-reset:hover { background: #555; border-color: #555; color: #ffffff; }
+  .tab-panel.active .section-label { color: #333; }
+  .tab-panel.active .eng-panel { background: #f8f8f8; border-color: #ddd; }
+  .tab-panel.active .eng-panel-title { color: #666; }
+  .tab-panel.active .eng-toggle { color: #666; }
+  .tab-panel.active .eng-body { color: #333; }
+  .tab-panel.active .result-val { color: #1a1a1a; }
+  .tab-panel.active .result-block.pass .result-val { color: var(--green); }
+  .tab-panel.active .result-block.fail .result-val { color: var(--red); }
+  .tab-panel.active .result-block.neutral .result-val { color: var(--accent); }
+  .tab-panel.active .result-sub { color: #666; }
+  .tab-panel.active .result-block.pass .result-sub { color: #047857; }
+  .tab-panel.active .result-block.fail .result-sub { color: #b91c1c; }
+  .tab-panel.active .result-block.neutral .result-sub { color: #047857; }
+  .tab-panel.active .result-lbl { color: #888; }
+  .tab-panel.active .disclaimer-text { color: #888 !important; }
+  .tab-panel.active .divider { background: #ddd; }
+
+
+  /* ── Circuit Trace Animation ── */
+  .trace-path {
+    fill: none; stroke: #f0c020; stroke-width: 2.5;
+    stroke-dasharray: 600; stroke-dashoffset: 600;
+    filter: drop-shadow(0 0 4px rgba(240,192,32,.6));
+    opacity: 0;
+  }
+  .trace-path.go { animation: trace-draw 2.5s ease-in-out forwards; }
+  @keyframes trace-draw {
+    0%   { stroke-dashoffset: 600; opacity: 1; }
+    80%  { stroke-dashoffset: 0; opacity: 1; }
+    100% { stroke-dashoffset: 0; opacity: 0; }
+  }
+  .anim-title { opacity: 0; }
+  .anim-eyebrow { opacity: 0; }
+  @keyframes reveal { 0% { opacity: 0; } 100% { opacity: 1; } }
+  .anim-title.show { animation: reveal 0.8s ease-out forwards; }
+  .anim-eyebrow.show { animation: reveal 0.6s ease-out 0.2s forwards; }
+  .wire-anim { stroke-dasharray: 200; stroke-dashoffset: 200; }
+  .wire-anim.go { animation: wire-grow 0.8s ease-out forwards; }
+  @keyframes wire-grow { to { stroke-dashoffset: 0; } }
+  .bolt-anim { opacity: 0; }
+  .bolt-anim.show { opacity: 1; }
+
 </style>
 <style>
   @keyframes spin{to{transform:rotate(360deg)}}
@@ -407,15 +476,21 @@ if('serviceWorker' in navigator){
 <div class="calc-wrap">
 
   <div class="calc-header">
-    <div class="calc-title-wrap">
-      <div class="calc-eyebrow">NEC 2026</div>
-      <div class="calc-title">Electricians Calculator</div>
-    </div>
+    <div class="calc-title anim-title" id="anim-title">Electricians Calculator</div>
+    <div class="calc-eyebrow anim-eyebrow" id="anim-eyebrow">NEC 2026</div>
+  </div>
+  <div class="calc-bolt-bar">
+    <svg viewBox="0 0 400 48" width="100%" height="48" xmlns="http://www.w3.org/2000/svg">
+      <line class="wire-anim" id="wire-l" x1="174" y1="24" x2="0" y2="24" stroke="#1c2230" stroke-width="1.5"/>
+      <line class="wire-anim" id="wire-r" x1="226" y1="24" x2="400" y2="24" stroke="#1c2230" stroke-width="1.5"/>
+      <polygon class="bolt-anim" id="bolt-icon" points="188,4 198,24 192,24 208,44 198,24 204,24" fill="#f0c020"/>
+      <path class="trace-path" id="trace-path" d="M 200,24 L 198,24 L 188,4 L 204,24 L 192,24 L 208,44 L 198,24 L 174,24 L 0,24 M 200,24 L 226,24 L 400,24"/>
+    </svg>
   </div>
 
   <div class="tab-bar">
     <button class="tab-btn active" id="tab-btn-vd" onclick="switchTab('vd',this)">V.Drop</button>
-    <button class="tab-btn" id="tab-btn-amp" onclick="switchTab('amp',this)">Ampacity</button>
+    <button class="tab-btn" id="tab-btn-amp" onclick="switchTab('amp',this)">Amps</button>
     <button class="tab-btn" id="tab-btn-cf" onclick="switchTab('cf',this)">Conduit</button>
     <button class="tab-btn" id="tab-btn-bf" onclick="switchTab('bf',this)">Box Fill</button>
     <button class="tab-btn" id="tab-btn-mc" onclick="switchTab('mc',this)">Motor</button>
@@ -789,9 +864,6 @@ if('serviceWorker' in navigator){
             <option value="saddle4">4-Bend Saddle</option>
             <option value="rolling">Rolling Offset</option>
             <option value="parallel">Parallel Offset</option>
-            <option value="obstround">Round Obstruction</option>
-            <option value="obstsquare">Square Obstruction</option>
-            <option value="obstrect">Rectangle Obstruction</option>
             <option value="match">Match (Segment)</option>
           </select></div>
         </div>
@@ -827,8 +899,8 @@ if('serviceWorker' in navigator){
       </div>
 
       <!-- SVG Illustration -->
-      <div id="bend-illus" style="padding:10px 20px 4px;">
-        <div style="background:#1a1a1a;border-radius:10px;padding:10px;display:flex;align-items:center;justify-content:center;min-height:90px;">
+      <div id="bend-illus" style="padding:0; background:#ffffff; border-radius:10px; margin:0 16px; border:none;">
+        <div style="background:#ffffff;border-radius:10px;padding:6px;display:flex;align-items:center;justify-content:center;min-height:90px;">
           <svg id="bend-svg" viewBox="0 0 280 96" width="100%" height="96" style="overflow:visible;">
             <!-- Updated dynamically by JS -->
           </svg>
@@ -1006,74 +1078,6 @@ if('serviceWorker' in navigator){
           <div class="field-row">
             <div class="field-label">No. of Conduits</div>
             <input class="fi" id="bend-par-count" type="number" value="3" min="2" max="8" step="1"/>
-          </div>
-        </div>
-      </div>
-
-      <!-- Round Obstruction inputs -->
-      <div id="bend-obstround-inputs" style="display:none;">
-        <div class="section-label">Inputs</div>
-        <div class="fields">
-          <div class="field-row">
-            <div class="field-label">Pipe Diameter (in)</div>
-            <input class="fi" id="bend-obr-diam" type="number" placeholder="e.g. 4" min="0" step="0.0625"/>
-          </div>
-          <div class="field-row">
-            <div class="field-label">Clearance (in)</div>
-            <input class="fi" id="bend-obr-clear" type="number" placeholder="e.g. 1" min="0" step="0.0625" value="1"/>
-          </div>
-          <div class="field-row">
-            <div class="field-label">Center Mark (in)</div>
-            <input class="fi" id="bend-obr-center" type="number" placeholder="e.g. 24" min="0" step="0.0625"/>
-          </div>
-        </div>
-      </div>
-
-      <!-- Square Obstruction inputs -->
-      <div id="bend-obstsquare-inputs" style="display:none;">
-        <div class="section-label">Inputs</div>
-        <div class="fields">
-          <div class="field-row">
-            <div class="field-label">Side Length (in)</div>
-            <input class="fi" id="bend-obs-side" type="number" placeholder="e.g. 4" min="0" step="0.0625"/>
-          </div>
-          <div class="field-row">
-            <div class="field-label">Clearance (in)</div>
-            <input class="fi" id="bend-obs-clear" type="number" placeholder="e.g. 1" min="0" step="0.0625" value="1"/>
-          </div>
-          <div class="field-row">
-            <div class="field-label">Center Mark (in)</div>
-            <input class="fi" id="bend-obs-center" type="number" placeholder="e.g. 24" min="0" step="0.0625"/>
-          </div>
-        </div>
-      </div>
-
-      <!-- Rectangle Obstruction inputs -->
-      <div id="bend-obstrect-inputs" style="display:none;">
-        <div class="section-label">Inputs</div>
-        <div class="fields">
-          <div class="field-row">
-            <div class="field-label">Width (in)</div>
-            <input class="fi" id="bend-obrc-w" type="number" placeholder="e.g. 6" min="0" step="0.0625"/>
-          </div>
-          <div class="field-row">
-            <div class="field-label">Height (in)</div>
-            <input class="fi" id="bend-obrc-h" type="number" placeholder="e.g. 4" min="0" step="0.0625"/>
-          </div>
-          <div class="field-row">
-            <div class="field-label">Bend Angle</div>
-            <div class="sel-wrap"><select class="fi" id="bend-obrc-angle">
-              <option value="30" selected>30° (standard)</option>
-              <option value="45">45° (tighter)</option>
-            </select></div>
-          </div>
-          <div class="field-row">
-            <div class="field-label">Clearance (in)</div>
-            <input class="fi" id="bend-obrc-clear" type="number" placeholder="e.g. 1" min="0" step="0.0625" value="1"/>
-          </div>
-          <div class="field-row">
-            <div class="field-label">Center Mark (in)</div>
-            <input class="fi" id="bend-obrc-center" type="number" placeholder="e.g. 24" min="0" step="0.0625"/>
           </div>
         </div>
       </div>
@@ -1451,6 +1455,9 @@ if('serviceWorker' in navigator){
     </div>
   </div>
 
+  <div style="text-align:center; padding:10px 20px 14px; background:var(--bg);">
+    <span style="font-family:'Roboto Mono',monospace; font-size:8px; color:#2a3a4a; letter-spacing:1px;">© 2026 Opserix. All rights reserved. · For reference only — verify with licensed electrician and local AHJ.</span>
+  </div>
 </div><!-- calc-wrap -->
 
 <script>
@@ -1535,7 +1542,7 @@ function calculateVD(){
     if(cur==='dc'){rm=getDcR(cond,ws);if(rm===null){showVDErr('⚠ '+sizeLabel(ws)+' not available.');return;}Km=rm;xlm=0;sTm=0;Tm=75;}
     else{var acm=getAcParams(cond,ws,type,inst);if(!acm){showVDErr('⚠ Not available.'+(cond==='aluminum'?' Min is 12 AWG.':''));return;}var kkm=calcK(acm.r,acm.xl,pf);Km=kkm.K;rm=acm.r;xlm=acm.xl;sTm=kkm.sinT;Tm=acm.T;}
     var mxD=calcMaxDist(ph,Km,I,V,thr,par),vdMx=calcVD(ph,Km,I,mxD,par);
-    showVDResults([makeBlock('neutral','Maximum Circuit Distance','AT '+thr+'%',Math.floor(mxD)+' ft',sizeLabel(ws)+' '+cond+' · '+phL+pfL+parL),makeBlock('neutral','Voltage Drop at Limit','= '+thr+'%',vdMx.toFixed(2)+' V',ctN+' — max '+thr+'%')]);
+    showVDResults([makeBlock('pass','Maximum Circuit Distance','AT '+thr+'%',Math.floor(mxD)+' ft',sizeLabel(ws)+' '+cond+' · '+phL+pfL+parL),makeBlock('pass','Voltage Drop at Limit','= '+thr+'%',vdMx.toFixed(2)+' V',ctN+' — max '+thr+'%')]);
     updateEng(rm,xlm,Km,sTm,pf,Tm,cur,ph);
   }
 }
@@ -1789,7 +1796,7 @@ function calculateAmp(){
 
   // Block 1 — Base Ampacity (always shown, sets the starting point)
   var baseSub=sizeLabel(ws)+' '+cond+' · '+tr+'°C insulation · '+instL;
-  blocks.push(makeBlock('neutral','Base Ampacity',instL,base+' A',baseSub));
+  blocks.push(makeBlock('pass','Base Ampacity',instL,base+' A',baseSub));
 
   // Block 2 — Corrected Ampacity (merges derating + terminal limit into one block)
   // Build a concise derating summary for the sub-line
@@ -1995,9 +2002,9 @@ function calculateCF(){
 
   var blocks=[];
   // Block 1 — conduit info
-  blocks.push(makeBlock('neutral','Conduit Area','TABLE 4',totalArea.toFixed(3)+' in²',condLabel));
+  blocks.push(makeBlock('pass','Conduit Area','TABLE 4',totalArea.toFixed(3)+' in²',condLabel));
   // Block 2 — wire fill
-  blocks.push(makeBlock('neutral','Wire Area Used','TABLE 5',totalWireArea.toFixed(4)+' in²',wireLines));
+  blocks.push(makeBlock('pass','Wire Area Used','TABLE 5',totalWireArea.toFixed(4)+' in²',wireLines));
   // Block 3 — fill result
   var fillBadge=pass?'✓ WITHIN '+allowedPct+'%':'▲ EXCEEDS '+allowedPct+'%';
   blocks.push(makeBlock(pass?'pass':'fail','Conduit Fill',fillBadge,fillPct.toFixed(1)+'%',
@@ -2084,337 +2091,263 @@ function getBendGain(size){
 
 // ── SVG Illustrations ─────────────────────────────────────────────────────────
 // SVG arrow marker defs — injected once into each diagram
-var BEND_DEFS='<defs>'+
-  '<marker id="ah" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#ea580c"/></marker>'+
-  '<marker id="ahrev" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#ea580c"/></marker>'+
-  '<marker id="ahw" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#fb923c"/></marker>'+
-  '<marker id="ahwrev" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#fb923c"/></marker>'+
-  '<filter id="mglow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'+
+var BEND_DEFS='<rect width="100%" height="100%" fill="#ffffff" rx="6"/>'+
+'<defs>'+
+  '<marker id="ah" markerWidth="7" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#222222"/></marker>'+
+  '<marker id="ahrev" markerWidth="7" markerHeight="6" refX="0" refY="3" orient="auto"><path d="M7,0 L0,3 L7,6 Z" fill="#222222"/></marker>'+
+  '<filter id="mglow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'+
 '</defs>';
 
-// Shared helpers
-var C1='#d1d5db'; // active conduit top
-var C2='#9ca3af'; // active conduit bottom
-var OB='#4a6278'; // obstruction fill
-var OBK='#6a8fa8'; // obstruction stroke
-var MK='#ff6b1a'; // mark color (bright)
-var DIM='#ea580c'; // dimension lines
+// Shared color tokens — chosen for contrast on dark background
+var C1='#a0a0a0'; // conduit body — medium grey
+var C2='#a0a0a0';
+var OB='#cccccc'; // obstruction fill — light grey
+var OBK='#888888'; // obstruction stroke — grey
+var MK='#111111'; // mark dots — black
+var DIM='#222222'; // dimension lines & text — black
 
 var BEND_SVG={
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // STUB-UP — 90° bend from floor/wall
+  // ═══════════════════════════════════════════════════════════════════════════
   stub:[
     BEND_DEFS,
-    // floor line
-    '<line x1="8" y1="76" x2="260" y2="76" stroke="#555" stroke-width="1" stroke-dasharray="5,3"/>',
-    '<text x="220" y="85" fill="#6b7280" font-size="8" font-family="monospace" letter-spacing="1">FLOOR</text>',
-    // conduit body
-    '<path d="M8,67 L105,67 Q117,67 117,55 L117,6" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
-    '<path d="M8,75 L105,75 Q123,75 123,63 L123,6" fill="none" stroke="'+C2+'" stroke-width="5" stroke-linecap="round"/>',
-    // take-up ref tick on conduit
-    '<line x1="104" y1="60" x2="118" y2="60" stroke="'+MK+'" stroke-width="1.5"/>',
-    // mark dot — larger, glowing
-    '<circle cx="111" cy="67" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    // leader line from mark to label below
-    '<line x1="111" y1="72" x2="111" y2="88" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="73" y="87" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">Mark Location</text>',
-    // Stub Height dimension — double-ended arrow left of conduit
-    '<line x1="92" y1="76" x2="92" y2="6" stroke="'+DIM+'" stroke-width="1.2" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<line x1="88" y1="76" x2="96" y2="76" stroke="'+DIM+'" stroke-width="1"/>',
-    '<line x1="88" y1="6" x2="96" y2="6" stroke="'+DIM+'" stroke-width="1"/>',
-    '<text x="44" y="45" fill="'+DIM+'" font-size="9.5" font-family="monospace" font-weight="bold">Stub</text>',
-    '<text x="38" y="56" fill="'+DIM+'" font-size="9.5" font-family="monospace" font-weight="bold">Height</text>',
-    // Take-up label
-    '<text x="128" y="63" fill="#fb923c" font-size="8.5" font-family="monospace">Take-Up</text>',
-    '<line x1="126" y1="60" x2="123" y2="60" stroke="#fb923c" stroke-width="1"/>'
+    // floor dashed line
+    '<line x1="6" y1="80" x2="270" y2="80" stroke="#aaa" stroke-width="1" stroke-dasharray="6,4"/>',
+    '<text x="236" y="90" fill="#999" font-size="8" font-family="monospace" letter-spacing="1.5">FLOOR</text>',
+    // conduit: horizontal run then tight 90° arc then vertical stub
+    '<path d="M 6,73 L 118,73 A 14,14 0 0,0 132,59 L 132,6" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
+    // mark dot — on the conduit at the start of the bend
+    '<circle cx="118" cy="73" r="5" fill="'+MK+'"/>',
+    // leader to "Mark Location" label
+    '<line x1="118" y1="78" x2="118" y2="99" stroke="'+MK+'" stroke-width="0.8"/>',
+    '<text x="86" y="99" fill="'+MK+'" font-size="8.5" font-family="monospace" font-weight="bold">Mark Location</text>',
+    // Stub Height dimension — double-arrow left of vertical
+    '<line x1="100" y1="80" x2="100" y2="6" stroke="'+DIM+'" stroke-width="1" marker-start="url(#ahrev)" marker-end="url(#ah)"/>',
+    '<line x1="96" y1="80" x2="104" y2="80" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<line x1="96" y1="6" x2="104" y2="6" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<text x="62" y="40" fill="'+DIM+'" font-size="9.5" font-family="monospace" font-weight="bold">Stub</text>',
+    '<text x="56" y="51" fill="'+DIM+'" font-size="9.5" font-family="monospace" font-weight="bold">Height</text>',
+    // Take-Up bracket
+    '<line x1="138" y1="76" x2="138" y2="62" stroke="'+DIM+'" stroke-width="0.8" marker-start="url(#ahrev)" marker-end="url(#ah)"/>',
+    '<line x1="134" y1="76" x2="142" y2="76" stroke="'+DIM+'" stroke-width="0.5"/>',
+    '<line x1="134" y1="62" x2="142" y2="62" stroke="'+DIM+'" stroke-width="0.5"/>',
+    '<text x="148" y="72" fill="'+DIM+'" font-size="8.5" font-family="monospace">Take-Up</text>'
   ],
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // BACK-TO-BACK — two 90° bends
+  // ═══════════════════════════════════════════════════════════════════════════
   back90:[
     BEND_DEFS,
-    // Left 90°
-    '<path d="M5,68 L70,68 Q82,68 82,56 L82,6" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
-    '<path d="M5,76 L70,76 Q90,76 90,64 L90,6" fill="none" stroke="'+C2+'" stroke-width="5" stroke-linecap="round"/>',
-    // Right 90°
-    '<path d="M215,68 L175,68 Q163,68 163,56 L163,6" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
-    '<path d="M215,76 L175,76 Q155,76 155,64 L155,6" fill="none" stroke="'+C2+'" stroke-width="5" stroke-linecap="round"/>',
-    // B-to-B dimension arrow
-    '<line x1="86" y1="6" x2="159" y2="6" stroke="'+DIM+'" stroke-width="1.5" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<text x="95" y="3" fill="'+DIM+'" font-size="9" font-family="monospace" font-weight="bold">Center-to-Center</text>',
-    // M1 mark
-    '<circle cx="82" cy="63" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="82" y1="68" x2="72" y2="84" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="46" y="90" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M1</text>',
-    // M2 mark
-    '<circle cx="163" cy="63" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="163" y1="68" x2="172" y2="84" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="170" y="90" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M2</text>',
-    // 90° angle label
-    '<text x="58" y="60" fill="#fb923c" font-size="10" font-family="monospace" font-weight="bold">90°</text>',
-    '<text x="165" y="60" fill="#fb923c" font-size="10" font-family="monospace" font-weight="bold">90°</text>'
+    // Left vertical down → 90° arc → horizontal bottom → 90° arc → right vertical up
+    '<path d="M 72,6 L 72,62 A 14,14 0 0,0 86,76 L 174,76 A 14,14 0 0,0 188,62 L 188,6" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
+    // Center-to-Center dimension across top
+    '<line x1="72" y1="4" x2="188" y2="4" stroke="'+DIM+'" stroke-width="1.2" marker-start="url(#ahrev)" marker-end="url(#ah)"/>',
+    '<line x1="72" y1="1" x2="72" y2="10" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<line x1="188" y1="1" x2="188" y2="10" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<text x="96" y="14" fill="'+DIM+'" font-size="8.5" font-family="monospace" font-weight="bold">Center-to-Center</text>',
+    // M1 mark — left bend point
+    '<circle cx="72" cy="64" r="5" fill="'+MK+'"/>',
+    '<line x1="72" y1="69" x2="56" y2="88" stroke="'+MK+'" stroke-width="0.8"/>',
+    '<text x="40" y="92" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M1</text>',
+    // M2 mark — right bend point
+    '<circle cx="192" cy="72" r="5" fill="'+MK+'"/>',
+    '<line x1="192" y1="77" x2="206" y2="90" stroke="'+MK+'" stroke-width="0.8"/>',
+    '<text x="200" y="94" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M2</text>',
+    // 90° labels near bends
+    '<text x="50" y="68" fill="'+DIM+'" font-size="9.5" font-family="monospace" font-weight="bold">90°</text>',
+    '<text x="200" y="68" fill="'+DIM+'" font-size="9.5" font-family="monospace" font-weight="bold">90°</text>'
   ],
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // OFFSET — two equal bends, same plane
+  // ═══════════════════════════════════════════════════════════════════════════
   offset:[
     BEND_DEFS,
-    // conduit
-    '<path d="M5,72 L78,72 Q94,72 107,56 Q120,40 136,40 L275,40" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
-    '<path d="M5,80 L76,80 Q93,80 107,63 Q121,46 138,46 L275,46" fill="none" stroke="'+C2+'" stroke-width="5" stroke-linecap="round"/>',
-    // Spread dimension — top
-    '<line x1="79" y1="18" x2="136" y2="18" stroke="'+DIM+'" stroke-width="1.5" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<line x1="79" y1="14" x2="79" y2="76" stroke="'+DIM+'" stroke-width="1" stroke-dasharray="3,3"/>',
-    '<line x1="136" y1="14" x2="136" y2="44" stroke="'+DIM+'" stroke-width="1" stroke-dasharray="3,3"/>',
-    '<text x="87" y="14" fill="'+DIM+'" font-size="9" font-family="monospace" font-weight="bold">Spread</text>',
-    // Rise dimension — right side
-    '<line x1="258" y1="43" x2="258" y2="76" stroke="'+DIM+'" stroke-width="1.5" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<line x1="254" y1="43" x2="262" y2="43" stroke="'+DIM+'" stroke-width="1"/>',
-    '<line x1="254" y1="76" x2="262" y2="76" stroke="'+DIM+'" stroke-width="1"/>',
-    '<text x="262" y="62" fill="'+DIM+'" font-size="9" font-family="monospace" font-weight="bold">Rise</text>',
-    // M1 mark
-    '<circle cx="80" cy="72" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="80" y1="78" x2="68" y2="90" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="44" y="90" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M1</text>',
-    // M2 mark
-    '<circle cx="136" cy="40" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="136" y1="36" x2="148" y2="26" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="148" y="24" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M2</text>',
-    // Angle labels
-    '<text x="84" y="56" fill="#fb923c" font-size="10" font-family="monospace" font-weight="bold">30°</text>',
-    '<text x="118" y="56" fill="#fb923c" font-size="10" font-family="monospace" font-weight="bold">30°</text>'
+    // Lower run at y=74, upper run at y=38.  Bends at ~30° angle.
+    // Conduit path: straight → tight bend → diagonal → tight bend → straight
+    '<path d="M 6,74 L 80,74 Q 90,74 100,62 L 128,38 Q 134,32 146,32 L 272,32" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
+    // Spread dimension across top
+    '<line x1="86" y1="16" x2="140" y2="16" stroke="'+DIM+'" stroke-width="1.2" marker-start="url(#ahrev)" marker-end="url(#ah)"/>',
+    '<line x1="86" y1="13" x2="86" y2="78" stroke="'+DIM+'" stroke-width="0.6" stroke-dasharray="3,3"/>',
+    '<line x1="140" y1="13" x2="140" y2="36" stroke="'+DIM+'" stroke-width="0.6" stroke-dasharray="3,3"/>',
+    '<text x="92" y="13" fill="'+DIM+'" font-size="9" font-family="monospace" font-weight="bold">Spread</text>',
+    // Rise dimension on right
+    '<line x1="260" y1="35" x2="260" y2="77" stroke="'+DIM+'" stroke-width="1.2" marker-start="url(#ahrev)" marker-end="url(#ah)"/>',
+    '<line x1="256" y1="35" x2="264" y2="35" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<line x1="256" y1="77" x2="264" y2="77" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<text x="265" y="59" fill="'+DIM+'" font-size="9" font-family="monospace" font-weight="bold">Rise</text>',
+    // M1 mark — first bend (lower)
+    '<circle cx="94" cy="73" r="5" fill="'+MK+'"/>',
+    '<line x1="94" y1="78" x2="88" y2="90" stroke="'+MK+'" stroke-width="0.8"/>',
+    '<text x="72" y="94" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M1</text>',
+    // M2 mark — second bend (upper)
+    '<circle cx="138" cy="33" r="5" fill="'+MK+'"/>',
+    '<text x="144" y="25" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M2</text>',
+    // Angle labels at bend points
+    '<text x="68" y="68" fill="'+DIM+'" font-size="9" font-family="monospace" font-weight="bold">30°</text>',
+    '<text x="138" y="44" fill="'+DIM+'" font-size="9" font-family="monospace" font-weight="bold">30°</text>'
   ],
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 3-BEND SADDLE — over obstruction
+  // ═══════════════════════════════════════════════════════════════════════════
   saddle3:[
     BEND_DEFS,
-    // obstacle — high contrast blue-grey
-    '<rect x="100" y="46" width="36" height="22" rx="2" fill="'+OB+'" stroke="'+OBK+'" stroke-width="1.5"/>',
-    '<text x="107" y="57" fill="#e2e8f0" font-size="7.5" font-family="monospace" font-weight="bold">OBS</text>',
-    // Obstacle Height dimension right of obstacle
-    '<line x1="142" y1="46" x2="142" y2="68" stroke="'+DIM+'" stroke-width="1.4" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<line x1="138" y1="46" x2="150" y2="46" stroke="'+DIM+'" stroke-width="1"/>',
-    '<line x1="138" y1="68" x2="150" y2="68" stroke="'+DIM+'" stroke-width="1"/>',
-    '<text x="154" y="60" fill="'+DIM+'" font-size="8.5" font-family="monospace" font-weight="bold">Obstacle</text>',
-    '<text x="154" y="70" fill="'+DIM+'" font-size="8.5" font-family="monospace" font-weight="bold">Height</text>',
-    // conduit over obstacle
-    '<path d="M5,68 L65,68 Q79,68 88,55 Q97,43 118,43 Q139,43 148,55 Q157,68 171,68 L250,68" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
-    '<path d="M5,76 L63,76 Q78,76 88,62 Q98,49 118,49 Q138,49 148,62 Q158,76 172,76 L250,76" fill="none" stroke="'+C2+'" stroke-width="5" stroke-linecap="round"/>',
-    // M1 mark
-    '<circle cx="68" cy="68" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="68" y1="73" x2="58" y2="88" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="34" y="88" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M1 22.5°</text>',
-    // M2 mark
-    '<circle cx="118" cy="43" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="118" y1="38" x2="118" y2="26" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="100" y="24" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M2 45°</text>',
-    // M3 mark
-    '<circle cx="168" cy="68" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="168" y1="73" x2="178" y2="88" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="162" y="88" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M3 22.5°</text>'
+    // Obstacle block — below conduit path so text is clear
+    '<rect x="110" y="52" width="36" height="22" rx="3" fill="'+OB+'" stroke="'+OBK+'" stroke-width="1.5"/>',
+    '<text x="114" y="66" fill="#555555" font-size="6.5" font-family="monospace" font-weight="bold">Obstacle</text>',
+    // Obstacle Height dimension — just right of obstacle box
+    '<line x1="150" y1="52" x2="150" y2="74" stroke="'+DIM+'" stroke-width="1" marker-start="url(#ahrev)" marker-end="url(#ah)"/>',
+    '<line x1="146" y1="52" x2="154" y2="52" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<line x1="146" y1="74" x2="154" y2="74" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<text x="152" y="66" fill="'+DIM+'" font-size="7.5" font-family="monospace" font-weight="bold">Height</text>',
+    // Conduit: flat → 22.5° up → 45° peak → 22.5° down → flat
+    '<path d="M 6,74 L 58,74 Q 68,74 78,62 L 104,36 Q 112,26 128,26 Q 144,26 152,36 L 178,62 Q 188,74 198,74 L 270,74" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
+    // M1 — 22.5° (start of first rise)
+    '<circle cx="66" cy="74" r="5" fill="'+MK+'"/>',
+    '<text x="38" y="90" fill="'+MK+'" font-size="8.5" font-family="monospace" font-weight="bold">M1 22.5°</text>',
+    // M2 — 45° (center/peak)
+    '<circle cx="128" cy="27" r="5" fill="'+MK+'"/>',
+    '<line x1="128" y1="22" x2="128" y2="12" stroke="'+MK+'" stroke-width="0.8"/>',
+    '<text x="108" y="10" fill="'+MK+'" font-size="8.5" font-family="monospace" font-weight="bold">M2 45°</text>',
+    // M3 — 22.5° (end of descent)
+    '<circle cx="192" cy="74" r="5" fill="'+MK+'"/>',
+    '<text x="178" y="90" fill="'+MK+'" font-size="8.5" font-family="monospace" font-weight="bold">M3 22.5°</text>'
   ],
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 4-BEND SADDLE — over wide obstruction
+  // ═══════════════════════════════════════════════════════════════════════════
   saddle4:[
     BEND_DEFS,
-    // obstacle — high contrast
-    '<rect x="88" y="44" width="60" height="22" rx="2" fill="'+OB+'" stroke="'+OBK+'" stroke-width="1.5"/>',
-    '<text x="100" y="56" fill="#e2e8f0" font-size="7.5" font-family="monospace" font-weight="bold">OBSTACLE</text>',
-    // Obstacle Height dimension right
-    '<line x1="154" y1="44" x2="154" y2="66" stroke="'+DIM+'" stroke-width="1.4" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<line x1="150" y1="44" x2="162" y2="44" stroke="'+DIM+'" stroke-width="1"/>',
-    '<line x1="150" y1="66" x2="162" y2="66" stroke="'+DIM+'" stroke-width="1"/>',
-    '<text x="166" y="57" fill="'+DIM+'" font-size="8" font-family="monospace" font-weight="bold">Height</text>',
-    // Obstacle Width dimension below
-    '<line x1="88" y1="76" x2="148" y2="76" stroke="'+DIM+'" stroke-width="1.4" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<line x1="88" y1="72" x2="88" y2="80" stroke="'+DIM+'" stroke-width="1"/>',
-    '<line x1="148" y1="72" x2="148" y2="80" stroke="'+DIM+'" stroke-width="1"/>',
-    '<text x="100" y="88" fill="'+DIM+'" font-size="8" font-family="monospace" font-weight="bold">Width</text>',
-    // conduit over
-    '<path d="M5,66 L48,66 Q62,66 72,54 L72,44 L88,44 M148,44 L164,44 L164,54 Q174,66 188,66 L250,66" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
-    '<path d="M5,74 L46,74 Q61,74 72,61 L72,49 L88,49 M148,49 L164,49 L164,62 Q175,74 190,74 L250,74" fill="none" stroke="'+C2+'" stroke-width="5" stroke-linecap="round"/>',
-    // M1
-    '<circle cx="52" cy="66" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="52" y1="71" x2="40" y2="88" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="12" y="88" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M1 30°</text>',
-    // M2
-    '<circle cx="72" cy="50" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="67" y1="50" x2="52" y2="40" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="24" y="38" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M2 30°</text>',
-    // M3
-    '<circle cx="164" cy="50" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="169" y1="50" x2="184" y2="40" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="172" y="38" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M3 30°</text>',
-    // M4
-    '<circle cx="184" cy="66" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="184" y1="71" x2="196" y2="88" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="184" y="88" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M4 30°</text>'
+    // Wide obstacle — positioned below flat conduit section
+    '<rect x="96" y="48" width="60" height="22" rx="3" fill="'+OB+'" stroke="'+OBK+'" stroke-width="1.5"/>',
+    '<text x="126" y="61" fill="#555555" font-size="7" font-family="monospace" font-weight="bold" text-anchor="middle">OBSTACLE</text>',
+    // Height dimension — far right, well clear of conduit
+    '<line x1="250" y1="40" x2="250" y2="74" stroke="'+DIM+'" stroke-width="1" marker-start="url(#ahrev)" marker-end="url(#ah)"/>',
+    '<line x1="246" y1="40" x2="254" y2="40" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<line x1="246" y1="74" x2="254" y2="74" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<text x="256" y="60" fill="'+DIM+'" font-size="7.5" font-family="monospace" font-weight="bold">Height</text>',
+    // Width dimension below obstacle
+    '<line x1="96" y1="80" x2="156" y2="80" stroke="'+DIM+'" stroke-width="1" marker-start="url(#ahrev)" marker-end="url(#ah)"/>',
+    '<line x1="96" y1="76" x2="96" y2="84" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<line x1="156" y1="76" x2="156" y2="84" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<text x="110" y="90" fill="'+DIM+'" font-size="7.5" font-family="monospace" font-weight="bold">Width</text>',
+    // Conduit: flat → 30° up → flat over obstacle → 30° down → flat
+    '<path d="M 6,74 L 38,74 Q 46,74 52,64 L 66,44 Q 70,38 80,38 L 96,38 M 156,38 L 172,38 Q 182,38 186,44 L 200,64 Q 206,74 214,74 L 244,74" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
+    // Flat top section over obstacle
+    '<line x1="92" y1="38" x2="160" y2="38" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
+    // M1 — 30°
+    '<circle cx="44" cy="74" r="5" fill="'+MK+'"/>',
+    '<text x="16" y="66" fill="'+MK+'" font-size="8.5" font-family="monospace" font-weight="bold">M1 30°</text>',
+    // M2 — 30°
+    '<circle cx="80" cy="38" r="5" fill="'+MK+'"/>',
+    '<line x1="80" y1="35" x2="74" y2="22" stroke="'+MK+'" stroke-width="0.8"/>',
+    '<text x="54" y="20" fill="'+MK+'" font-size="8.5" font-family="monospace" font-weight="bold">M2 30°</text>',
+    // M3 — 30°
+    '<circle cx="172" cy="38" r="5" fill="'+MK+'"/>',
+    '<line x1="172" y1="35" x2="178" y2="22" stroke="'+MK+'" stroke-width="0.8"/>',
+    '<text x="168" y="20" fill="'+MK+'" font-size="8.5" font-family="monospace" font-weight="bold">M3 30°</text>',
+    // M4 — 30°
+    '<circle cx="208" cy="74" r="5" fill="'+MK+'"/>',
+    '<text x="208" y="66" fill="'+MK+'" font-size="8.5" font-family="monospace" font-weight="bold">M4 30°</text>'
   ],
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ROLLING OFFSET — offset in two planes
+  // ═══════════════════════════════════════════════════════════════════════════
   rolling:[
     BEND_DEFS,
-    // conduit
-    '<path d="M5,68 L72,68 Q88,68 102,52 Q116,36 134,36 L275,36" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
-    '<path d="M5,76 L70,76 Q87,76 102,59 Q117,42 136,42 L275,42" fill="none" stroke="'+C2+'" stroke-width="5" stroke-linecap="round"/>',
-    // Vertical Rise dimension right
-    '<line x1="258" y1="39" x2="258" y2="72" stroke="'+DIM+'" stroke-width="1.5" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<line x1="254" y1="39" x2="270" y2="39" stroke="'+DIM+'" stroke-width="1"/>',
-    '<line x1="254" y1="72" x2="270" y2="72" stroke="'+DIM+'" stroke-width="1"/>',
-    '<text x="263" y="58" fill="'+DIM+'" font-size="8.5" font-family="monospace" font-weight="bold">Vert</text>',
-    '<text x="263" y="68" fill="'+DIM+'" font-size="8.5" font-family="monospace" font-weight="bold">Rise</text>',
-    // Horizontal Rise dimension bottom
-    '<line x1="72" y1="86" x2="134" y2="86" stroke="'+DIM+'" stroke-width="1.5" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<line x1="72" y1="82" x2="72" y2="90" stroke="'+DIM+'" stroke-width="1"/>',
-    '<line x1="134" y1="82" x2="134" y2="90" stroke="'+DIM+'" stroke-width="1"/>',
-    '<text x="83" y="90" fill="'+DIM+'" font-size="8.5" font-family="monospace" font-weight="bold">Horiz Rise</text>',
-    // Roll rotation indicator — arc
-    '<path d="M50,54 A14,14 0 0,1 68,68" fill="none" stroke="#fb923c" stroke-width="1.5"/>',
-    '<text x="28" y="52" fill="#fb923c" font-size="9" font-family="monospace" font-weight="bold">Roll°</text>',
+    // Conduit: same visual as offset (it's a 2-plane offset shown in projection)
+    '<path d="M 6,72 L 78,72 Q 88,72 98,60 L 126,36 Q 132,30 144,30 L 272,30" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
+    // Vertical Rise dimension — right side
+    '<line x1="260" y1="33" x2="260" y2="75" stroke="'+DIM+'" stroke-width="1.2" marker-start="url(#ahrev)" marker-end="url(#ah)"/>',
+    '<line x1="256" y1="33" x2="264" y2="33" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<line x1="256" y1="75" x2="264" y2="75" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<text x="265" y="50" fill="'+DIM+'" font-size="8" font-family="monospace" font-weight="bold">Vert</text>',
+    '<text x="265" y="60" fill="'+DIM+'" font-size="8" font-family="monospace" font-weight="bold">Rise</text>',
+    // Horizontal Rise dimension — bottom
+    '<line x1="84" y1="88" x2="140" y2="88" stroke="'+DIM+'" stroke-width="1.2" marker-start="url(#ahrev)" marker-end="url(#ah)"/>',
+    '<line x1="84" y1="84" x2="84" y2="92" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<line x1="140" y1="84" x2="140" y2="92" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<text x="89" y="83" fill="'+DIM+'" font-size="7.5" font-family="monospace" font-weight="bold">Horiz Rise</text>',
+    // Roll angle arc at M1
+    '<path d="M 60,56 A 18,18 0 0,1 80,72" fill="none" stroke="'+DIM+'" stroke-width="1.2"/>',
+    '<text x="32" y="54" fill="'+DIM+'" font-size="9" font-family="monospace" font-weight="bold">Roll°</text>',
     // M1 mark
-    '<circle cx="74" cy="68" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="74" y1="63" x2="74" y2="52" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="58" y="50" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M1</text>',
+    '<circle cx="84" cy="72" r="5" fill="'+MK+'"/>',
+    '<line x1="84" y1="67" x2="78" y2="56" stroke="'+MK+'" stroke-width="0.8"/>',
+    '<text x="70" y="54" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M1</text>',
     // M2 mark
-    '<circle cx="134" cy="36" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="134" y1="31" x2="144" y2="22" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="144" y="20" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M2</text>'
+    '<circle cx="139" cy="30" r="5" fill="'+MK+'"/>',
+    '<line x1="139" y1="25" x2="148" y2="18" stroke="'+MK+'" stroke-width="0.8"/>',
+    '<text x="148" y="16" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M2</text>'
   ],
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PARALLEL OFFSET — multiple conduits
+  // ═══════════════════════════════════════════════════════════════════════════
   parallel:[
     BEND_DEFS,
-    // 3 conduits — brightest on top, darkest on bottom
-    '<path d="M5,52 L70,52 Q86,52 100,37 Q114,22 130,22 L275,22" fill="none" stroke="'+C1+'" stroke-width="6" stroke-linecap="round"/>',
-    '<path d="M5,64 L67,64 Q84,64 100,48 Q116,32 134,32 L275,32" fill="none" stroke="#9ca3af" stroke-width="6" stroke-linecap="round"/>',
-    '<path d="M5,76 L64,76 Q82,76 100,59 Q118,42 138,42 L275,42" fill="none" stroke="#6b7280" stroke-width="6" stroke-linecap="round"/>',
-    // Spacing dimension right
-    '<line x1="258" y1="22" x2="258" y2="42" stroke="'+DIM+'" stroke-width="1.5" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<line x1="254" y1="22" x2="270" y2="22" stroke="'+DIM+'" stroke-width="1"/>',
-    '<line x1="254" y1="42" x2="270" y2="42" stroke="'+DIM+'" stroke-width="1"/>',
-    '<text x="262" y="34" fill="'+DIM+'" font-size="8.5" font-family="monospace" font-weight="bold">Sp</text>',
-    // Mark stagger dimension
-    '<line x1="72" y1="86" x2="90" y2="86" stroke="'+DIM+'" stroke-width="1.4" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<text x="74" y="90" fill="'+DIM+'" font-size="7.5" font-family="monospace">Stagger</text>',
-    // M1 on conduit 1
-    '<circle cx="72" cy="52" r="4" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="72" y1="48" x2="62" y2="38" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="36" y="36" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">C1 M1</text>',
-    // M1 on conduit 2
-    '<circle cx="86" cy="64" r="4" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<text x="88" y="60" fill="'+MK+'" font-size="8" font-family="monospace">C2 M1</text>',
-    // M1 on conduit 3
-    '<circle cx="100" cy="76" r="4" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<text x="102" y="72" fill="'+MK+'" font-size="8" font-family="monospace">C3 M1</text>',
+    // Three conduits — C1 (top/first), C2 (middle), C3 (bottom/last)
+    // Each offsets upward with staggered marks
+    '<path d="M 6,48 L 72,48 Q 82,48 92,36 L 114,18 Q 120,12 132,12 L 250,12" fill="none" stroke="'+C1+'" stroke-width="5" stroke-linecap="round"/>',
+    '<path d="M 6,62 L 80,62 Q 90,62 100,50 L 122,28 Q 128,22 140,22 L 250,22" fill="none" stroke="#b8b8b8" stroke-width="5" stroke-linecap="round" opacity="0.8"/>',
+    '<path d="M 6,76 L 88,76 Q 98,76 108,64 L 130,42 Q 136,36 148,36 L 250,36" fill="none" stroke="#d0d0d0" stroke-width="5" stroke-linecap="round" opacity="0.65"/>',
+    // Spacing dimension — right side
+    '<line x1="256" y1="12" x2="256" y2="36" stroke="'+DIM+'" stroke-width="1" marker-start="url(#ahrev)" marker-end="url(#ah)"/>',
+    '<line x1="252" y1="12" x2="270" y2="12" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<line x1="252" y1="36" x2="270" y2="36" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<text x="260" y="27" fill="'+DIM+'" font-size="8" font-family="monospace" font-weight="bold">Sp</text>',
+    // Stagger dimension — between M1 marks
+    '<line x1="76" y1="88" x2="104" y2="88" stroke="'+DIM+'" stroke-width="1" marker-start="url(#ahrev)" marker-end="url(#ah)"/>',
+    '<text x="78" y="96" fill="'+DIM+'" font-size="7.5" font-family="monospace">Stagger</text>',
+    // C1 M1 mark
+    '<circle cx="76" cy="48" r="4" fill="'+MK+'"/>',
+    '<line x1="76" y1="43" x2="70" y2="34" stroke="'+MK+'" stroke-width="0.8"/>',
+    '<text x="44" y="32" fill="'+MK+'" font-size="8" font-family="monospace" font-weight="bold">C1 M1</text>',
+    // C2 M1 mark
+    '<circle cx="84" cy="62" r="4" fill="'+MK+'"/>',
+    '<text x="88" y="58" fill="'+MK+'" font-size="7.5" font-family="monospace" font-weight="bold">C2 M1</text>',
+    // C3 M1 mark
+    '<circle cx="92" cy="76" r="4" fill="'+MK+'"/>',
+    '<text x="96" y="74" fill="'+MK+'" font-size="7.5" font-family="monospace" font-weight="bold">C3 M1</text>',
     // C labels left
-    '<text x="8" y="50" fill="'+C1+'" font-size="8" font-family="monospace">C1</text>',
-    '<text x="8" y="62" fill="#9ca3af" font-size="8" font-family="monospace">C2</text>',
-    '<text x="8" y="74" fill="#6b7280" font-size="8" font-family="monospace">C3</text>'
+    '<text x="8" y="44" fill="'+C1+'" font-size="8" font-family="monospace" font-weight="bold">C1</text>',
+    '<text x="8" y="58" fill="#b8b8b8" font-size="8" font-family="monospace" font-weight="bold">C2</text>',
+    '<text x="8" y="72" fill="#d0d0d0" font-size="8" font-family="monospace" font-weight="bold">C3</text>'
   ],
 
-  obstround:[
-    BEND_DEFS,
-    // pipe cross-section — right side of diagram
-    '<circle cx="210" cy="62" r="22" fill="'+OB+'" stroke="'+OBK+'" stroke-width="2"/>',
-    '<circle cx="210" cy="62" r="10" fill="#2d4a5e" stroke="'+OBK+'" stroke-width="1"/>',
-    '<text x="200" y="66" fill="#e2e8f0" font-size="7.5" font-family="monospace" font-weight="bold">PIPE</text>',
-    // Pipe Diameter dimension across pipe
-    '<line x1="188" y1="62" x2="232" y2="62" stroke="'+DIM+'" stroke-width="1.5" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<text x="185" y="57" fill="'+DIM+'" font-size="7.5" font-family="monospace" font-weight="bold">Pipe Dia.</text>',
-    // full conduit saddle: approach, flat top, descent to exit level
-    '<path d="M5,62 L52,62 Q66,62 77,48 Q88,34 100,34 L160,34 Q172,34 183,48 Q194,62 208,62 L250,62" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
-    '<path d="M5,70 L50,70 Q65,70 77,55 Q89,40 102,40 L158,40 Q170,40 183,55 Q196,70 210,70 L250,70" fill="none" stroke="'+C2+'" stroke-width="5" stroke-linecap="round"/>',
-    // M1 mark — start of approach
-    '<circle cx="56" cy="62" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="56" y1="67" x2="44" y2="82" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="10" y="88" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M1 22.5°</text>',
-    // M2 mark — center top of hump
-    '<circle cx="130" cy="34" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="130" y1="29" x2="130" y2="18" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="108" y="16" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M2 45°</text>',
-    // M3 mark — start of descent on far side
-    '<circle cx="160" cy="34" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="160" y1="29" x2="168" y2="18" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="158" y="16" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M3 22.5°</text>'
-  ],
-
-  obstsquare:[
-    BEND_DEFS,
-    // square obstruction — positioned after conduit hump
-    '<rect x="118" y="36" width="44" height="44" rx="2" fill="'+OB+'" stroke="'+OBK+'" stroke-width="2"/>',
-    '<text x="124" y="60" fill="#e2e8f0" font-size="7.5" font-family="monospace" font-weight="bold">SQUARE</text>',
-    '<text x="124" y="70" fill="#e2e8f0" font-size="7.5" font-family="monospace" font-weight="bold">OBS.</text>',
-    // Obstacle Height dimension right
-    '<line x1="168" y1="36" x2="168" y2="80" stroke="'+DIM+'" stroke-width="1.5" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<line x1="164" y1="36" x2="176" y2="36" stroke="'+DIM+'" stroke-width="1"/>',
-    '<line x1="164" y1="80" x2="176" y2="80" stroke="'+DIM+'" stroke-width="1"/>',
-    '<text x="178" y="56" fill="'+DIM+'" font-size="8" font-family="monospace" font-weight="bold">Obstacle</text>',
-    '<text x="178" y="66" fill="'+DIM+'" font-size="8" font-family="monospace" font-weight="bold">Height</text>',
-    // full conduit: approach → up → flat top → down → departure
-    '<path d="M5,64 L52,64 Q66,64 78,50 Q90,36 104,36 L162,36 Q176,36 188,50 Q200,64 214,64 L275,64" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
-    '<path d="M5,72 L50,72 Q65,72 78,57 Q91,42 106,42 L160,42 Q174,42 188,57 Q202,72 216,72 L275,72" fill="none" stroke="'+C2+'" stroke-width="5" stroke-linecap="round"/>',
-    // M1 — approach start
-    '<circle cx="56" cy="64" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="56" y1="69" x2="44" y2="82" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="10" y="88" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M1 22.5°</text>',
-    // M2 — center top
-    '<circle cx="104" cy="36" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="104" y1="31" x2="104" y2="20" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="80" y="18" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M2 45°</text>',
-    // M3 — start of descent
-    '<circle cx="162" cy="36" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="162" y1="31" x2="170" y2="20" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="158" y="18" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M3 22.5°</text>'
-  ],
-
-  obstrect:[
-    BEND_DEFS,
-    // rectangle obstruction
-    '<rect x="148" y="40" width="76" height="38" rx="2" fill="'+OB+'" stroke="'+OBK+'" stroke-width="2"/>',
-    '<text x="161" y="61" fill="#e2e8f0" font-size="8" font-family="monospace" font-weight="bold">DUCT/OBS.</text>',
-    // Width dimension below duct
-    '<line x1="148" y1="86" x2="224" y2="86" stroke="'+DIM+'" stroke-width="1.5" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<line x1="148" y1="82" x2="148" y2="90" stroke="'+DIM+'" stroke-width="1"/>',
-    '<line x1="224" y1="82" x2="224" y2="90" stroke="'+DIM+'" stroke-width="1"/>',
-    '<text x="170" y="90" fill="'+DIM+'" font-size="8.5" font-family="monospace" font-weight="bold">Width</text>',
-    // Height dimension right
-    '<line x1="232" y1="40" x2="232" y2="78" stroke="'+DIM+'" stroke-width="1.5" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<line x1="228" y1="40" x2="240" y2="40" stroke="'+DIM+'" stroke-width="1"/>',
-    '<line x1="228" y1="78" x2="240" y2="78" stroke="'+DIM+'" stroke-width="1"/>',
-    '<text x="244" y="62" fill="'+DIM+'" font-size="8.5" font-family="monospace" font-weight="bold">Height</text>',
-    // conduit: approach → M1 up → M2 flat top left → M3 flat top right → M4 down → departure
-    '<path d="M5,66 L46,66 Q60,66 72,52 Q84,38 98,38 L172,38 Q186,38 198,52 Q210,66 224,66 L275,66" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
-    '<path d="M5,74 L44,74 Q59,74 72,59 Q85,44 100,44 L170,44 Q184,44 198,59 Q212,74 226,74 L275,74" fill="none" stroke="'+C2+'" stroke-width="5" stroke-linecap="round"/>',
-    // Marks — positioned on the continuous conduit path
-    '<circle cx="50" cy="66" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="50" y1="71" x2="38" y2="84" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="4" y="88" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M1 30°</text>',
-    '<circle cx="98" cy="38" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="98" y1="33" x2="88" y2="20" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="70" y="18" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M2 30°</text>',
-    '<circle cx="172" cy="38" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="172" y1="33" x2="180" y2="20" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="164" y="18" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M3 30°</text>',
-    '<circle cx="220" cy="66" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="220" y1="71" x2="228" y2="84" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="212" y="88" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M4 30°</text>'
-  ],
-
+  // ═══════════════════════════════════════════════════════════════════════════
+  // MATCH — duplicate existing offset
+  // ═══════════════════════════════════════════════════════════════════════════
   match:[
     BEND_DEFS,
-    // EXISTING conduit — clearly dashed
-    '<path d="M5,50 L72,50 Q88,50 102,36 Q116,22 132,22 L275,22" fill="none" stroke="#5a6270" stroke-width="7" stroke-dasharray="8,5" stroke-linecap="round"/>',
-    '<text x="8" y="44" fill="#5a6270" font-size="8.5" font-family="monospace" font-weight="bold">EXISTING</text>',
+    // EXISTING conduit — dashed, subdued
+    '<path d="M 6,44 L 74,44 Q 84,44 94,34 L 118,14 Q 124,8 136,8 L 250,8" fill="none" stroke="#4a5a6a" stroke-width="6" stroke-dasharray="8,5" stroke-linecap="round"/>',
+    '<text x="8" y="40" fill="#999" font-size="8" font-family="monospace" font-weight="bold">EXISTING</text>',
     // NEW conduit — solid, bright
-    '<path d="M5,68 L68,68 Q84,68 100,53 Q116,38 134,38 L275,38" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
-    '<path d="M5,76 L66,76 Q83,76 100,60 Q117,44 136,44 L275,44" fill="none" stroke="'+C2+'" stroke-width="5" stroke-linecap="round"/>',
-    '<text x="8" y="88" fill="'+C1+'" font-size="8.5" font-family="monospace" font-weight="bold">NEW</text>',
+    '<path d="M 6,68 L 78,68 Q 88,68 98,58 L 122,34 Q 128,28 140,28 L 250,28" fill="none" stroke="'+C1+'" stroke-width="8" stroke-linecap="round"/>',
+    '<text x="8" y="78" fill="'+C1+'" font-size="8" font-family="monospace" font-weight="bold">NEW</text>',
     // Spacing dimension right
-    '<line x1="258" y1="22" x2="258" y2="41" stroke="'+DIM+'" stroke-width="1.5" marker-end="url(#ah)" marker-start="url(#ahrev)"/>',
-    '<line x1="254" y1="22" x2="270" y2="22" stroke="'+DIM+'" stroke-width="1"/>',
-    '<line x1="254" y1="41" x2="270" y2="41" stroke="'+DIM+'" stroke-width="1"/>',
-    '<text x="262" y="34" fill="'+DIM+'" font-size="8" font-family="monospace" font-weight="bold">Sp</text>',
-    // Mark stagger dimension
-    '<line x1="72" y1="50" x2="90" y2="68" stroke="'+DIM+'" stroke-width="1.2" stroke-dasharray="3,2"/>',
-    '<text x="76" y="44" fill="'+DIM+'" font-size="8" font-family="monospace">Stagger</text>',
+    '<line x1="256" y1="11" x2="256" y2="31" stroke="'+DIM+'" stroke-width="1.2" marker-start="url(#ahrev)" marker-end="url(#ah)"/>',
+    '<line x1="252" y1="11" x2="268" y2="11" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<line x1="252" y1="31" x2="268" y2="31" stroke="'+DIM+'" stroke-width="0.7"/>',
+    '<text x="260" y="24" fill="'+DIM+'" font-size="8" font-family="monospace" font-weight="bold">Sp</text>',
+    // Stagger dimension
+    '<line x1="78" y1="44" x2="96" y2="68" stroke="'+DIM+'" stroke-width="0.8" stroke-dasharray="3,2"/>',
+    '<text x="56" y="30" fill="'+DIM+'" font-size="7.5" font-family="monospace">Stagger</text>',
     // M1 on new conduit
-    '<circle cx="72" cy="68" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="72" y1="73" x2="60" y2="86" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="30" y="88" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M1 (new)</text>',
+    '<circle cx="82" cy="68" r="5" fill="'+MK+'"/>',
+    '<line x1="82" y1="73" x2="68" y2="88" stroke="'+MK+'" stroke-width="0.8"/>',
+    '<text x="36" y="96" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M1 (new)</text>',
     // M2 on new conduit
-    '<circle cx="134" cy="38" r="5" fill="'+MK+'" filter="url(#mglow)"/>',
-    '<line x1="134" y1="33" x2="144" y2="22" stroke="'+MK+'" stroke-width="1"/>',
-    '<text x="138" y="20" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M2 (new)</text>'
+    '<circle cx="140" cy="28" r="5" fill="'+MK+'"/>',
+    '<line x1="140" y1="33" x2="148" y2="42" stroke="'+MK+'" stroke-width="0.8"/>',
+    '<text x="140" y="50" fill="'+MK+'" font-size="9" font-family="monospace" font-weight="bold">M2 (new)</text>'
   ]
 };
 
@@ -2428,9 +2361,6 @@ function updateBendIllus(type){
     saddle4:'4-Bend Saddle — over wide obstruction',
     rolling:'Rolling Offset — offset in two planes',
     parallel:'Parallel Offset — multiple conduits',
-    obstround:'Round Obstruction — saddle over pipe',
-    obstsquare:'Square Obstruction — saddle over box',
-    obstrect:'Rectangle Obstruction — saddle over duct',
     match:'Match — duplicate existing offset'
   };
   document.getElementById('bend-svg').innerHTML=parts.join('');
@@ -2439,7 +2369,7 @@ function updateBendIllus(type){
 
 function onBendTypeChange(){
   var t=document.getElementById('bend-type').value;
-  var all=['stub','back90','offset','saddle3','saddle4','rolling','parallel','obstround','obstsquare','obstrect','match'];
+  var all=['stub','back90','offset','saddle3','saddle4','rolling','parallel','match'];
   all.forEach(function(k){
     var el=document.getElementById('bend-'+k+'-inputs');
     if(el) el.style.display=(k===t)?'block':'none';
@@ -2494,8 +2424,8 @@ function calculateBend(){
     if(mark<=0){showBendErr('Stub height too short for '+size+'" conduit (take-up='+deduct+'").');return;}
     var actual=bendAngle(stubTarget,mat);
     var gain=getBendGain(size);
-    blocks.push(makeBlock('neutral','Mark at','FROM END',toFrac(mark),'Place arrow here'));
-    blocks.push(makeBlock('neutral','Gain','90° BEND','5"','Standard field gain — cut stick 5" shorter than calculated run'));
+    blocks.push(makeBlock('pass','Mark at','FROM END',toFrac(mark),'Place arrow here'));
+    blocks.push(makeBlock('pass','Gain','90° BEND','5"','Standard field gain — cut stick 5" shorter than calculated run'));
     blocks.push(makeBlock('pass','Bend to',mat,actual+'°',sb>0?'Includes '+sb+'° spring-back comp — result: ~'+stubTarget+'°':''));
 
   } else if(type==='back90'){
@@ -2509,9 +2439,9 @@ function calculateBend(){
     if(mark1<=0){showBendErr('1st mark too short for deduct of '+deduct+'".');return;}
     var actual90=bendAngle(90,mat);
     var gain=getBendGain(size);
-    blocks.push(makeBlock('neutral','1st Mark','FROM END',toFrac(mark1),'Bend to '+actual90+'°'+(sb>0?' ('+sb+'° comp)':'')));
-    blocks.push(makeBlock('neutral','2nd Mark','FROM END',toFrac(mark2),'Bend to '+actual90+'°'+(sb>0?' ('+sb+'° comp)':'')));
-    blocks.push(makeBlock('neutral','Gain (per 90°)','PER BEND','5"','Standard field gain per 90° — subtract 5" per bend from cut length'));
+    blocks.push(makeBlock('pass','1st Mark','FROM END',toFrac(mark1),'Bend to '+actual90+'°'+(sb>0?' ('+sb+'° comp)':'')));
+    blocks.push(makeBlock('pass','2nd Mark','FROM END',toFrac(mark2),'Bend to '+actual90+'°'+(sb>0?' ('+sb+'° comp)':'')));
+    blocks.push(makeBlock('pass','Gain (per 90°)','PER BEND','5"','Standard field gain per 90° — subtract 5" per bend from cut length'));
     blocks.push(makeBlock('pass','Take-Up',size+'" ('+mat+')',toFrac(deduct),'Per bend'));
 
   } else if(type==='offset'){
@@ -2530,8 +2460,8 @@ function calculateBend(){
     var shrinkAmt=rise*shrink;
     var mark2=first+spread;
     var actualA=bendAngle(angle,mat);
-    blocks.push(makeBlock('neutral','1st Mark','FROM END',toFrac(first),'Bend to '+actualA+'°'+(sb>0?' ('+sb+'° comp)':'')));
-    blocks.push(makeBlock('neutral','2nd Mark','FROM END',toFrac(mark2),'Spread = '+toFrac(spread)));
+    blocks.push(makeBlock('pass','1st Mark','FROM END',toFrac(first),'Bend to '+actualA+'°'+(sb>0?' ('+sb+'° comp)':'')));
+    blocks.push(makeBlock('pass','2nd Mark','FROM END',toFrac(mark2),'Spread = '+toFrac(spread)));
     blocks.push(makeBlock('pass','Shrink',angle+'° OFFSET',toFrac(shrinkAmt),'Add to cut length'));
 
   } else if(type==='saddle3'){
@@ -2545,9 +2475,9 @@ function calculateBend(){
     var shrink=height*3/16;
     if(mark1<=0){showBendErr('Center mark too close to end for this obstacle height.');return;}
     var a225=bendAngle(22.5,mat); var a45=bendAngle(45,mat);
-    blocks.push(makeBlock('neutral','Mark 1','FROM END',toFrac(mark1),'Bend to '+a225+'°'));
-    blocks.push(makeBlock('neutral','Mark 2','CENTER',toFrac(center),'Bend to '+a45+'°'));
-    blocks.push(makeBlock('neutral','Mark 3','FROM END',toFrac(mark3),'Bend to '+a225+'°'));
+    blocks.push(makeBlock('pass','Mark 1','FROM END',toFrac(mark1),'Bend to '+a225+'°'));
+    blocks.push(makeBlock('pass','Mark 2','CENTER',toFrac(center),'Bend to '+a45+'°'));
+    blocks.push(makeBlock('pass','Mark 3','FROM END',toFrac(mark3),'Bend to '+a225+'°'));
     blocks.push(makeBlock('pass','Shrink','SHORTENING',toFrac(shrink),'Add to cut length'));
 
   } else if(type==='saddle4'){
@@ -2568,10 +2498,10 @@ function calculateBend(){
     var mark4=center+hw+spread;
     if(mark1<=0){showBendErr('Center mark too close to end for this configuration.');return;}
     var aS4=bendAngle(s4ang,mat);
-    blocks.push(makeBlock('neutral','Mark 1','FROM END',toFrac(mark1),'Bend to '+aS4+'°'));
-    blocks.push(makeBlock('neutral','Mark 2','FROM END',toFrac(mark2),'Bend to '+aS4+'°'));
-    blocks.push(makeBlock('neutral','Mark 3','FROM END',toFrac(mark3),'Bend to '+aS4+'°'));
-    blocks.push(makeBlock('neutral','Mark 4','FROM END',toFrac(mark4),'Bend to '+aS4+'°'));
+    blocks.push(makeBlock('pass','Mark 1','FROM END',toFrac(mark1),'Bend to '+aS4+'°'));
+    blocks.push(makeBlock('pass','Mark 2','FROM END',toFrac(mark2),'Bend to '+aS4+'°'));
+    blocks.push(makeBlock('pass','Mark 3','FROM END',toFrac(mark3),'Bend to '+aS4+'°'));
+    blocks.push(makeBlock('pass','Mark 4','FROM END',toFrac(mark4),'Bend to '+aS4+'°'));
     blocks.push(makeBlock('pass','Shrink',s4ang+'° SADDLE',toFrac(shrink),'Add to cut length'));
 
   } else if(type==='rolling'){
@@ -2592,10 +2522,10 @@ function calculateBend(){
     var spread=trueRise*mult2;
     var shrink=trueRise*shrink2;
     var mark2=first+spread;
-    blocks.push(makeBlock('neutral','Rotate Bender','ROLL ANGLE',rollAngle.toFixed(1)+'°','Tilt from vertical before bending'));
-    blocks.push(makeBlock('neutral','True Rise','DIAGONAL',toFrac(trueRise),'Use this as your offset rise'));
-    blocks.push(makeBlock('neutral','1st Mark','FROM END',toFrac(first),''));
-    blocks.push(makeBlock('neutral','2nd Mark','FROM END',toFrac(mark2),'Spread = '+toFrac(spread)));
+    blocks.push(makeBlock('pass','Rotate Bender','ROLL ANGLE',rollAngle.toFixed(1)+'°','Tilt from vertical before bending'));
+    blocks.push(makeBlock('pass','True Rise','DIAGONAL',toFrac(trueRise),'Use this as your offset rise'));
+    blocks.push(makeBlock('pass','1st Mark','FROM END',toFrac(first),''));
+    blocks.push(makeBlock('pass','2nd Mark','FROM END',toFrac(mark2),'Spread = '+toFrac(spread)));
     blocks.push(makeBlock('pass','Shrink',angle+'° ROLLING',toFrac(shrink),'Add to cut length'));
 
   } else if(type==='parallel'){
@@ -2616,73 +2546,12 @@ function calculateBend(){
     var shrink=rise*shrinkP;
     var sinA=Math.sin(angle*Math.PI/180);
     var markShift=spacing/sinA;
-    blocks.push(makeBlock('neutral','Stagger per Conduit','MARK SHIFT',toFrac(markShift),'Add this to each successive 1st mark'));
+    blocks.push(makeBlock('pass','Stagger per Conduit','MARK SHIFT',toFrac(markShift),'Add this to each successive 1st mark'));
     for(var i=0;i<count;i++){
       var m1=first+(i*markShift);
-      blocks.push(makeBlock('neutral','C'+(i+1)+' Mark 1 / Mark 2','FROM END',toFrac(m1)+' / '+toFrac(m1+spread),''));
+      blocks.push(makeBlock('pass','C'+(i+1)+' Mark 1 / Mark 2','FROM END',toFrac(m1)+' / '+toFrac(m1+spread),''));
     }
     blocks.push(makeBlock('pass','Shrink',angle+'° PARALLEL',toFrac(shrink),'Add to each cut length'));
-
-  } else if(type==='obstround'){
-    var diam=parseFloat(document.getElementById('bend-obr-diam').value);
-    var clear=parseFloat(document.getElementById('bend-obr-clear').value)||1;
-    var center=parseFloat(document.getElementById('bend-obr-center').value);
-    if(isNaN(diam)||diam<=0){showBendErr('Enter a valid pipe diameter.');return;}
-    if(isNaN(center)||center<=0){showBendErr('Enter a valid center mark.');return;}
-    var obstHeight=diam/2+clear;
-    var spread=obstHeight*2.5;
-    var mark1=center-spread;
-    var mark3=center+spread;
-    var shrink=obstHeight*3/16;
-    if(mark1<=0){showBendErr('Center mark too close to end.');return;}
-    var a225x=bendAngle(22.5,mat); var a45x=bendAngle(45,mat);
-    blocks.push(makeBlock('neutral','Mark 1','FROM END',toFrac(mark1),'Bend to '+a225x+'°'));
-    blocks.push(makeBlock('neutral','Mark 2','CENTER',toFrac(center),'Bend to '+a45x+'°'));
-    blocks.push(makeBlock('neutral','Mark 3','FROM END',toFrac(mark3),'Bend to '+a225x+'°'));
-    blocks.push(makeBlock('pass','Shrink','SHORTENING',toFrac(shrink),'Add to cut length'));
-
-  } else if(type==='obstsquare'){
-    var side=parseFloat(document.getElementById('bend-obs-side').value);
-    var clear=parseFloat(document.getElementById('bend-obs-clear').value)||1;
-    var center=parseFloat(document.getElementById('bend-obs-center').value);
-    if(isNaN(side)||side<=0){showBendErr('Enter a valid side length.');return;}
-    if(isNaN(center)||center<=0){showBendErr('Enter a valid center mark.');return;}
-    var obstHeight=side+clear;
-    var spread=obstHeight*2.5;
-    var mark1=center-spread;
-    var mark3=center+spread;
-    var shrink=obstHeight*3/16;
-    if(mark1<=0){showBendErr('Center mark too close to end.');return;}
-    blocks.push(makeBlock('neutral','Mark 1 · 22.5°','FROM END',toFrac(mark1),''));
-    var a225x=bendAngle(22.5,mat); var a45x=bendAngle(45,mat);
-    blocks.push(makeBlock('neutral','Mark 1','FROM END',toFrac(mark1),'Bend to '+a225x+'°'));
-    blocks.push(makeBlock('neutral','Mark 2','CENTER',toFrac(center),'Bend to '+a45x+'°'));
-    blocks.push(makeBlock('neutral','Mark 3','FROM END',toFrac(mark3),'Bend to '+a225x+'°'));
-
-  } else if(type==='obstrect'){
-    var rw=parseFloat(document.getElementById('bend-obrc-w').value);
-    var rh=parseFloat(document.getElementById('bend-obrc-h').value);
-    var rcAng=parseInt(document.getElementById('bend-obrc-angle').value)||30;
-    var clear=parseFloat(document.getElementById('bend-obrc-clear').value)||1;
-    var center=parseFloat(document.getElementById('bend-obrc-center').value);
-    if(isNaN(rw)||rw<=0){showBendErr('Enter a valid width.');return;}
-    if(isNaN(rh)||rh<=0){showBendErr('Enter a valid height.');return;}
-    if(isNaN(center)||center<=0){showBendErr('Enter a valid center mark.');return;}
-    var obstHeight=rh+clear;
-    var sinA=Math.sin(rcAng*Math.PI/180);
-    var spread=obstHeight/sinA;
-    var hw=rw/2;
-    var mark1=center-hw-spread;
-    var mark2=center-hw;
-    var mark3=center+hw;
-    var mark4=center+hw+spread;
-    var shrink=rcAng===30?(obstHeight*0.5):(obstHeight*0.375);
-    if(mark1<=0){showBendErr('Center mark too close to end.');return;}
-    blocks.push(makeBlock('neutral','Mark 1 · '+rcAng+'°','FROM END',toFrac(mark1),''));
-    blocks.push(makeBlock('neutral','Mark 2 · '+rcAng+'°','FROM END',toFrac(mark2),'Start flat top'));
-    blocks.push(makeBlock('neutral','Mark 3 · '+rcAng+'°','FROM END',toFrac(mark3),'End flat top'));
-    blocks.push(makeBlock('neutral','Mark 4 · '+rcAng+'°','FROM END',toFrac(mark4),''));
-    blocks.push(makeBlock('pass','Shrink',rcAng+'° SADDLE',toFrac(shrink),'Add to cut length'));
 
   } else if(type==='match'){
     var rise=parseFloat(document.getElementById('bend-match-rise').value);
@@ -2702,8 +2571,8 @@ function calculateBend(){
     var sinA=Math.sin(angle*Math.PI/180);
     var markShift=spacing/sinA;
     var adjFirst=first+markShift;
-    blocks.push(makeBlock('neutral','1st Mark','FROM END',toFrac(adjFirst),'Stagger = '+toFrac(markShift)));
-    blocks.push(makeBlock('neutral','2nd Mark','FROM END',toFrac(adjFirst+spread),''));
+    blocks.push(makeBlock('pass','1st Mark','FROM END',toFrac(adjFirst),'Stagger = '+toFrac(markShift)));
+    blocks.push(makeBlock('pass','2nd Mark','FROM END',toFrac(adjFirst+spread),''));
     blocks.push(makeBlock('pass','Shrink',angle+'° MATCH',toFrac(shrink),'Add to cut length'));
   }
 
@@ -2723,9 +2592,6 @@ function resetBend(){
    'bend-s4-height','bend-s4-width','bend-s4-center',
    'bend-roll-horiz','bend-roll-vert','bend-roll-first',
    'bend-par-rise','bend-par-spacing','bend-par-first',
-   'bend-obr-diam','bend-obr-center',
-   'bend-obs-side','bend-obs-center',
-   'bend-obrc-w','bend-obrc-h','bend-obrc-center',
    'bend-match-rise','bend-match-first','bend-match-spacing']
     .forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
   onBendTypeChange();
@@ -2864,10 +2730,10 @@ function calculateBF(){
 
   // Block 1 — Box volume
   var boxLabel=boxType==='custom'?'Custom box':document.getElementById('bf-box').options[document.getElementById('bf-box').selectedIndex].text;
-  blocks.push(makeBlock('neutral','Box Volume','TABLE 314.16(A)',boxVol.toFixed(1)+' in³',boxLabel));
+  blocks.push(makeBlock('pass','Box Volume','TABLE 314.16(A)',boxVol.toFixed(1)+' in³',boxLabel));
 
   // Block 2 — Volume used with full breakdown
-  blocks.push(makeBlock('neutral','Volume Used','314.16(B)(1)–(5)',totalUsed.toFixed(2)+' in³',breakdown.join(' · ')));
+  blocks.push(makeBlock('pass','Volume Used','314.16(B)(1)–(5)',totalUsed.toFixed(2)+' in³',breakdown.join(' · ')));
 
   // Block 3 — Pass/fail
   var badge=pass?'✓ WITHIN VOLUME':'▲ EXCEEDS VOLUME';
@@ -3092,21 +2958,21 @@ function calculateMC(){
   var blocks=[];
 
   // Block 1 — FLC
-  blocks.push(makeBlock('neutral','Full-Load Current',tblRef,
+  blocks.push(makeBlock('pass','Full-Load Current',tblRef,
     flc+' A',
     hp+' HP · '+voltage+'V · '+phLabel));
 
   // Block 2 — Conductor
-  blocks.push(makeBlock('neutral','Min Conductor Size','430.22',
+  blocks.push(makeBlock('pass','Min Conductor Size','430.22',
     wireResult, wireSub));
 
   // Block 3 — OCPD
-  blocks.push(makeBlock('neutral','Max Branch-Circuit OCPD','430.52 / TABLE 430.52',
+  blocks.push(makeBlock('pass','Max Branch-Circuit OCPD','430.52 / TABLE 430.52',
     ocpdFinal+' A',
     ocpdDevLabel+' · '+ocpdNote));
 
   // Block 4 — Overload
-  blocks.push(makeBlock('neutral','Max Overload Protection','430.32',
+  blocks.push(makeBlock('pass','Max Overload Protection','430.32',
     olMax.toFixed(1)+' A',
     olLabel+' · '+flc+' A × '+olPct+'% = '+olMax.toFixed(1)+' A · set OL relay ≤ this value'));
 
@@ -3263,6 +3129,19 @@ cfAddRow();
 updateBendIllus('stub');
 onTypeChange();onObjectiveChange();
 
+</script>
+
+<script>
+(function(){
+  setTimeout(function(){ document.getElementById('trace-path').classList.add('go'); },300);
+  setTimeout(function(){ document.getElementById('bolt-icon').classList.add('show'); },1200);
+  setTimeout(function(){
+    document.getElementById('wire-l').classList.add('go');
+    document.getElementById('wire-r').classList.add('go');
+  },1400);
+  setTimeout(function(){ document.getElementById('anim-title').classList.add('show'); },1800);
+  setTimeout(function(){ document.getElementById('anim-eyebrow').classList.add('show'); },2000);
+})();
 </script>
 </body>
 </html>
